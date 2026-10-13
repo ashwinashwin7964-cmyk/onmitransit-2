@@ -1,0 +1,708 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>OmniTransit — Coimbatore Transit Command Center</title>
+  <!-- Leaflet CSS fallback -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <!-- DESKTOP APP WINDOW (GOOGLE CHROME UI) -->
+  <div class="chrome-window">
+
+    <!-- ENTERPRISE TRANSPORT COMMAND MENU BAR -->
+    <header class="command-nav-bar">
+      <!-- Brand & Transport Authority Crest -->
+      <div class="brand-block" onclick="activateChromeTab('tab-map')" title="OmniTransit Command Center">
+        <div class="brand-crest">
+          <svg width="18" height="18" viewBox="0 0 16 16" fill="currentColor">
+            <path d="M4 1a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h.5a1.5 1.5 0 0 0 3 0h1a1.5 1.5 0 0 0 3 0H12a2 2 0 0 0 2-2V3a2 2 0 0 0-2-2H4zm0 2h8v4H4V3zm0 5h8v2H4V8zm2 4a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0zm5 0a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0z"/>
+          </svg>
+        </div>
+        <div class="brand-text-col">
+          <span class="brand-title">OMNITRANSIT</span>
+          <span class="brand-sub">Coimbatore Metropolitan Transport Authority</span>
+        </div>
+      </div>
+
+      <!-- Main Navigation Menu Bar Links -->
+      <nav class="nav-menu-bar">
+        <button class="nav-menu-item active" id="navBtn-map" onclick="activateChromeTab('tab-map', this)">
+          <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor"><path d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10zm0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6z"/></svg>
+          <span>Live Transit Network</span>
+        </button>
+
+        <button class="nav-menu-item" id="navBtn-routes" onclick="activateChromeTab('tab-routes', this)">
+          <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor"><path d="M2.5 1A1.5 1.5 0 0 0 1 2.5V12a1.5 1.5 0 0 0 1.5 1.5h.5a1.5 1.5 0 0 0 3 0h4a1.5 1.5 0 0 0 3 0h.5a1.5 1.5 0 0 0 1.5-1.5V2.5A1.5 1.5 0 0 0 13.5 1h-11zm.5 2h10a.5.5 0 0 1 .5.5V6H2V3.5a.5.5 0 0 1 .5-.5zm-.5 4h11v4a.5.5 0 0 1-.5.5h-10A.5.5 0 0 1 2 11V7zm1.5 5a.5.5 0 1 1 0-1 .5.5 0 0 1 0 1zm9 0a.5.5 0 1 1 0-1 .5.5 0 0 1 0 1z"/></svg>
+          <span>Corridors &amp; Headways</span>
+        </button>
+
+        <button class="nav-menu-item" id="navBtn-advisory" onclick="activateChromeTab('tab-advisory', this)">
+          <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor"><path d="M8 16a2 2 0 0 0 2-2H6a2 2 0 0 0 2 2zm.995-14.901a1 1 0 1 0-1.99 0A5.002 5.002 0 0 0 3 6c0 1.098-.5 6-2 7h14c-1.5-1-2-5.902-2-7 0-2.42-1.72-4.44-4.005-4.901z"/></svg>
+          <span>Real-Time Advisory</span>
+          <span class="nav-badge-pill">LIVE</span>
+        </button>
+
+        <!-- Admin Panel Tab Link (Hidden by default from regular users) -->
+        <button class="nav-menu-item" id="navBtn-advanced" style="display:none;" onclick="activateChromeTab('tab-advanced', this)">
+          <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0a8 8 0 1 0 8 8A8 8 0 0 0 8 0zm.5 4.5v3.25l2.25 1.35-.75 1.23L7 8.5V4.5z"/></svg>
+          <span>Diagnostics &amp; ML (Admin)</span>
+        </button>
+      </nav>
+
+      <!-- Real-Time Telemetry Stream & Status -->
+      <div class="command-actions-bar">
+        <!-- 1,000,000 Dataset Stream Live Pill (every 4s) -->
+        <div class="stream-telemetry-pill" id="streamTelemetryPill" title="1,000,000-Row Real-Time Telemetry Stream (Active)">
+          <span class="pulse-led-dot"></span>
+          <span id="streamCounterText">Line #1 / 1,000,000 (4s)</span>
+        </div>
+
+        <!-- Weather / Condition Status -->
+        <div class="system-condition-pill" title="Operational Weather &amp; Grid Condition">
+          <span>Weather:</span>
+          <strong id="topConditionText" style="color:#60A5FA;">Clear (31°C)</strong>
+        </div>
+
+        <!-- Google Maps Connection Status -->
+        <div class="gmaps-status-pill" id="gmapsStatusPill" onclick="openGoogleMapsKeyModal()" title="Google Maps API Connection">
+          <span class="status-indicator-dot nominal" style="width:6px; height:6px;"></span>
+          <span>Google Maps:</span>
+          <strong id="gmapsStatusText" style="color:var(--accent-success);">Active</strong>
+        </div>
+
+        <!-- Operator Profile & JWT Auth -->
+        <div class="operator-profile-pill" id="operatorProfilePill" onclick="openLoginModal()" title="Operator Authentication &amp; JWT Security">
+          <div class="operator-avatar-badge" id="operatorAvatarBadge">CM</div>
+          <span id="operatorRoleLabel">Passenger Access</span>
+        </div>
+
+        <button class="chrome-tool-btn" id="chromeMenuBtn" onclick="toggleChromeMenu()" title="System Options" style="color:#94A3B8;">
+          <svg viewBox="0 0 16 16" fill="currentColor"><circle cx="8" cy="3" r="1.5"/><circle cx="8" cy="8" r="1.5"/><circle cx="8" cy="13" r="1.5"/></svg>
+        </button>
+
+        <!-- Dropdown Menu -->
+        <div class="chrome-dropdown-menu" id="chromeDropdownMenu" style="display:none; right:16px; top:54px;">
+          <div class="chrome-menu-item" onclick="openGoogleMapsKeyModal()">Configure Google Maps API Key...</div>
+          <div class="chrome-menu-item" onclick="openLoginModal()">Operator Credentials (JWT)...</div>
+          <div class="chrome-menu-divider"></div>
+          <div class="chrome-menu-item" id="dropdownAdminItem" style="display:none;" onclick="activateChromeTab('tab-advanced')">Engineering Diagnostics &amp; ML Studio</div>
+          <div class="chrome-menu-item" onclick="chromeReload()">Refresh Live Fleet Telemetry</div>
+        </div>
+      </div>
+    </header>
+
+    <!-- REAL-TIME ADVISORY TICKER STRIP (STREAMED EVERY 4 SECONDS) -->
+    <div class="advisory-ticker-strip">
+      <div class="ticker-label-badge">
+        <svg width="12" height="12" viewBox="0 0 16 16" fill="currentColor"><path d="M8 16a2 2 0 0 0 2-2H6a2 2 0 0 0 2 2zm.995-14.901a1 1 0 1 0-1.99 0A5.002 5.002 0 0 0 3 6c0 1.098-.5 6-2 7h14c-1.5-1-2-5.902-2-7 0-2.42-1.72-4.44-4.005-4.901z"/></svg>
+        <span>Live Advisory</span>
+      </div>
+      <div class="ticker-text-wrapper" id="advisoryTickerText">
+        [06:07 AM] Nominal service flow at Kalapatti IT Hub: R-107 running on regular 12m headway (Wait 3.2m, Crowding 20%).
+      </div>
+      <div class="ticker-meta-badge" id="advisoryTickerMeta">
+        Tick #1 &bull; 4s Line Stream &bull; 1M Rows
+      </div>
+    </div>
+
+    <!-- ROW 3: WEBPAGE WRAPPER -->
+    <main class="chrome-webpage-wrapper">
+
+      <!-- =====================================================================
+           TAB 1: LIVE TRANSIT MAP (USER-FRIENDLY & CLEAN - HERO EXPERIENCE)
+           ===================================================================== -->
+      <div id="tab-map" class="tab-pane active">
+        <div class="hero-map-viewport">
+
+          <!-- Google Maps Native Container (Active when Google Maps key is entered) -->
+          <div id="googleMapContainer"></div>
+
+          <!-- Leaflet Map Container (Active by default / fallback) -->
+          <div id="leafletMapContainer">
+            <div id="coimbatoreMap"></div>
+          </div>
+
+          <!-- Canvas Map Wrapper (Fallback) -->
+          <div id="canvasMapWrapper" style="display:none; position:absolute; inset:0; z-index:2; background:#fff;">
+            <canvas id="twinCanvas" style="width:100%; height:100%;"></canvas>
+          </div>
+
+          <!-- Top Floating Action Pill (User-Friendly Controls) -->
+          <div class="map-floating-top-bar">
+            <!-- Scenario Selector -->
+            <div class="floating-pill">
+              <span style="color:var(--text-secondary); font-size:11px;">Condition:</span>
+              <select id="scenarioSelector" onchange="runDisruptionScenario()">
+                <option value="HEAVY_RAIN">Monsoon Inundation (Flooding)</option>
+                <option value="METRO_BREAKDOWN">Feeder Route Disruption</option>
+                <option value="STADIUM_SURGE">Commercial &amp; Stadium Surge</option>
+                <option value="EV_GRID_CRISIS">Substation Peak-Load Throttling</option>
+                <option value="COMPOUND_CRISIS">Multi-Corridor Stress Test</option>
+              </select>
+            </div>
+
+            <!-- Primary Dispatch Action -->
+            <button class="btn-pill-primary" id="btnDispatchNow" onclick="runSwarmAuction()">
+              <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor"><path d="M11.251.068a.5.5 0 0 1 .265.565l-1.5 5.5h4.234a.5.5 0 0 1 .38.824l-8.5 9.5a.5.5 0 0 1-.84-.576l1.5-5.5H2.54a.5.5 0 0 1-.38-.824l8.5-9.5a.5.5 0 0 1 .591-.089z"/></svg>
+              <span>Auto-Dispatch Fleet</span>
+            </button>
+
+            <!-- Reset Button -->
+            <button class="btn-pill-secondary" onclick="resetSimulation()" title="Restore Equilibrium">
+              <span>Equilibrium</span>
+            </button>
+
+            <!-- Map Provider Switcher -->
+            <button class="btn-pill-secondary" id="btnMapProviderToggle" onclick="toggleMapProvider()" title="Switch between Google Maps and Vector Map">
+              <svg width="13" height="13" viewBox="0 0 16 16" fill="currentColor"><path d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm7.5-6.923c-.67.204-1.335.82-1.887 1.855A7.97 7.97 0 0 0 5.145 4H7.5V1.077zM4.09 5a7.962 7.962 0 0 0-.294 3H1.055A7.018 7.018 0 0 1 4.09 5zm-.294 4c.05.688.15 1.35.294 2H1.055A7.018 7.018 0 0 1 3.796 9zm1.349 3a7.97 7.97 0 0 0 1.458 1.923V11H5.145zm2.355 2.923V11h2.355c.67.204 1.335.82 1.887 1.855A7.97 7.97 0 0 1 7.5 13.923zm3.355-2.923H8.5V9h3.704a7.962 7.962 0 0 1-.294 2zm.294-3H8.5V5h2.355c.67.204 1.335.82 1.887 1.855A7.97 7.97 0 0 1 11.149 8zM7.5 5V1.077c.67.204 1.335.82 1.887 1.855A7.97 7.97 0 0 1 9.855 4H7.5zM4.09 11H7.5V9H3.796a7.962 7.962 0 0 0 .294 2z"/></svg>
+              <span id="lblMapProvider">Switch to Vector Map</span>
+            </button>
+          </div>
+
+          <!-- Sleek Google Maps API Key Setup Prompt (Only visible if key is not configured) -->
+          <div class="gmaps-setup-banner" id="gmapsSetupBanner" style="display:none;">
+            <span><strong>Google Maps API:</strong> Enter API key for native Google Maps satellite &amp; street view:</span>
+            <input type="password" id="bannerGmapsKeyInput" placeholder="Enter API Key..." />
+            <button class="btn-pill-primary" onclick="saveGoogleMapsKeyFromBanner()" style="padding:4px 12px; font-size:11px;">
+              Connect Map
+            </button>
+            <button onclick="document.getElementById('gmapsSetupBanner').style.display='none'" style="border:none; background:transparent; cursor:pointer; color:var(--text-tertiary); font-size:14px;">&times;</button>
+          </div>
+
+          <!-- Bottom Floating Metrics Ribbon (Professional Enterprise View) -->
+          <div class="map-floating-metrics">
+            <div class="metric-item">
+              <span class="metric-icon" title="Average Waiting Time">
+                <svg width="15" height="15" viewBox="0 0 16 16" fill="currentColor"><path d="M8 3.5a.5.5 0 0 0-1 0V9a.5.5 0 0 0 .252.434l3.5 2a.5.5 0 0 0 .496-.868L8 8.71V3.5z"/><path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm7-8A7 7 0 1 1 1 8a7 7 0 0 1 14 0z"/></svg>
+              </span>
+              <div class="metric-data">
+                <span class="metric-label">Avg Wait Time</span>
+                <span class="metric-val" id="kpiAvgWait">9.8 min</span>
+              </div>
+            </div>
+
+            <div class="metric-divider"></div>
+
+            <div class="metric-item">
+              <span class="metric-icon" title="Active Fleet Units">
+                <svg width="15" height="15" viewBox="0 0 16 16" fill="currentColor"><path d="M2.5 1A1.5 1.5 0 0 0 1 2.5V12a1.5 1.5 0 0 0 1.5 1.5h.5a1.5 1.5 0 0 0 3 0h4a1.5 1.5 0 0 0 3 0h.5a1.5 1.5 0 0 0 1.5-1.5V2.5A1.5 1.5 0 0 0 13.5 1h-11zm.5 2h10a.5.5 0 0 1 .5.5V6H2V3.5a.5.5 0 0 1 .5-.5zm-.5 4h11v4a.5.5 0 0 1-.5.5h-10A.5.5 0 0 1 2 11V7zm1.5 5a.5.5 0 1 1 0-1 .5.5 0 0 1 0 1zm9 0a.5.5 0 1 1 0-1 .5.5 0 0 1 0 1z"/></svg>
+              </span>
+              <div class="metric-data">
+                <span class="metric-label">Active Buses</span>
+                <span class="metric-val" id="kpiActiveFleet">40 units</span>
+              </div>
+            </div>
+
+            <div class="metric-divider"></div>
+
+            <div class="metric-item">
+              <span class="metric-icon" title="Waiting Commuters">
+                <svg width="15" height="15" viewBox="0 0 16 16" fill="currentColor"><path d="M7 14s-1 0-1-1 1-4 5-4 5 3 5 4-1 1-1 1H7zm4-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm-5.784 6A2.238 2.238 0 0 1 5 13c0-1.355.68-2.75 1.936-3.72A6.325 6.325 0 0 0 5 9c-4 0-5 3-5 4s1 1 1 1h4.216zM4.5 8a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5z"/></svg>
+              </span>
+              <div class="metric-data">
+                <span class="metric-label">Commuters Waiting</span>
+                <span class="metric-val" id="kpiTotalWaiting">720 pax</span>
+              </div>
+            </div>
+
+            <div class="metric-divider"></div>
+
+            <div class="metric-item">
+              <span class="metric-icon" title="Environmental Carbon Offset">
+                <svg width="15" height="15" viewBox="0 0 16 16" fill="currentColor"><path d="M1.4 8.2c-.3 1.8.5 3.6 2.1 4.5 1.6 1 3.7.8 5.1-.4 1.4-1.2 2.1-3 1.8-4.8-.3-1.8-1.7-3.2-3.5-3.6-1.8-.4-3.6.4-4.6 1.9l-.9 2.4zm2.8-1.5c.7-1 1.9-1.6 3.1-1.3 1.2.3 2.1 1.2 2.3 2.4.2 1.2-.3 2.4-1.2 3.2-1 .8-2.3 1-3.4.3-1.1-.6-1.7-1.8-1.5-3l.7-1.6z"/><path d="M8 15v-4.5c0-.8.7-1.5 1.5-1.5h4.5"/></svg>
+              </span>
+              <div class="metric-data">
+                <span class="metric-label">CO2 Offset</span>
+                <span class="metric-val" id="kpiCarbonSaved" style="color:var(--accent-success);">2.1 tons</span>
+              </div>
+            </div>
+
+            <div class="metric-divider"></div>
+
+            <div class="metric-item">
+              <span class="metric-icon" title="System Operational Status">
+                <span class="status-indicator-dot nominal" id="statusIndicatorDot"></span>
+              </span>
+              <div class="metric-data">
+                <span class="metric-label">Status</span>
+                <span class="metric-val" id="activeScenarioTitle" style="color:var(--accent-success); font-size:12px;">Equilibrium</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right Floating Drawer: Stations & Live Buses (Clean, Unboxed) -->
+          <aside class="map-floating-drawer" id="stationDrawer">
+            <div class="drawer-header">
+              <h3>Coimbatore Hubs &amp; Fleet</h3>
+              <div style="display:flex; gap:6px;">
+                <button class="btn-pill-secondary" id="btnDrawerTabStations" onclick="switchDrawerTab('stations')" style="padding:2px 8px; font-size:11px; background:#E8F0FE; color:var(--accent-primary);">Hubs</button>
+                <button class="btn-pill-secondary" id="btnDrawerTabBuses" onclick="switchDrawerTab('buses')" style="padding:2px 8px; font-size:11px;">Buses</button>
+              </div>
+            </div>
+
+            <div class="drawer-search">
+              <input type="text" id="stationSearchInput" placeholder="Filter hubs (e.g. Gandhipuram, Peelamedu)..." oninput="filterDrawerStations(this.value)" />
+            </div>
+
+            <!-- Stations List Content -->
+            <div class="drawer-content" id="drawerStationsList">
+              <div id="stationsGrid"></div>
+            </div>
+
+            <!-- Buses List Content -->
+            <div class="drawer-content" id="drawerBusesList" style="display:none; padding:12px;">
+              <div style="font-size:11px; color:var(--text-secondary); margin-bottom:8px;">Active Electric Fleet (25% SOC Guardrail floor):</div>
+              <div id="evFleetGrid" style="display:flex; flex-direction:column; gap:8px;"></div>
+            </div>
+          </aside>
+
+          <!-- Drawer Toggle Button -->
+          <button class="drawer-toggle-btn" id="drawerToggleBtn" onclick="toggleStationDrawer()" title="Toggle Stations Panel">
+            <svg id="drawerToggleSvg" width="12" height="12" viewBox="0 0 16 16" fill="currentColor" style="transition:transform 0.2s;"><path d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"/></svg>
+          </button>
+
+        </div>
+      </div>
+
+      <!-- =====================================================================
+           TAB 2: BUS SCHEDULES & CORRIDORS (CLEAN & READABLE)
+           ===================================================================== -->
+      <div id="tab-routes" class="tab-pane">
+        <div class="schedules-container">
+          <div class="schedules-header">
+            <div style="display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:12px;">
+              <div>
+                <h2>Coimbatore Arterial Bus Schedules &amp; Route Optimization</h2>
+                <p>Data-driven estimation of passenger demand, crowding, and waiting times with alternative route comparisons.</p>
+              </div>
+              <div class="desktop-status-pill nominal" style="font-size:11px; padding:4px 10px; background:#E8F0FE; color:var(--accent-primary); border:1px solid rgba(26,115,232,0.2);">
+                Policy Planning Sandbox &bull; Non-Live Simulation Projections
+              </div>
+            </div>
+            <div style="background:#FFF8E1; border:1px solid #FFE082; border-radius:6px; padding:8px 12px; margin-top:10px; font-size:12px; color:#5D4037; display:flex; align-items:center; gap:8px;">
+              <span style="font-weight:700; text-transform:uppercase; font-size:10px; letter-spacing:0.04em; background:#FFE082; padding:2px 6px; border-radius:4px; color:#3E2723;">Sandbox Mode</span>
+              <span>All demand estimates, crowding levels, and waiting-time comparisons below are simulated planning projections and must not be presented as live passenger arrival information.</span>
+            </div>
+          </div>
+
+          <div class="clean-table-card">
+            <table class="clean-table">
+              <thead>
+                <tr>
+                  <th>Hub Station &amp; Commuter Cohort</th>
+                  <th>Primary Corridor vs. Alternative Route</th>
+                  <th>Estimated Wait &amp; Crowding (Simulated)</th>
+                  <th>Optimized Wait &amp; Demand (Projected)</th>
+                  <th>Headway Adjustment</th>
+                  <th>Why Recommended (Causal AI Explanation)</th>
+                </tr>
+              </thead>
+              <tbody id="comparisonTableBody"></tbody>
+            </table>
+          </div>
+
+          <div class="schedules-header" style="margin-top:24px;">
+            <h2>Passenger Advisory &amp; Travel Guidance</h2>
+            <p>Real-time passenger assistance updates generated by the autonomous transit model.</p>
+          </div>
+          <div id="companionGrid" style="display:grid; grid-template-columns:repeat(2, 1fr); gap:16px;"></div>
+        </div>
+      </div>
+
+      <!-- =====================================================================
+           TAB 3: REAL-TIME ADVISORY DASHBOARD (1M DATASET STREAM & REROUTING)
+           ===================================================================== -->
+      <div id="tab-advisory" class="tab-pane">
+        <div class="advisory-container">
+          <!-- Top Header Banner -->
+          <div class="advisory-header-banner">
+            <div>
+              <h2>Coimbatore Real-Time Passenger Advisory &amp; Dynamic Corridor Alerts</h2>
+              <p>Autonomous travel recommendations streamed line-by-line every 4 seconds from the 1,000,000-row telemetry dataset.</p>
+            </div>
+            <div style="display:flex; gap:10px; align-items:center; flex-wrap:wrap;">
+              <span class="stream-telemetry-pill">
+                <span class="pulse-led-dot"></span>
+                <span>Active 1M Stream: 4s Interval</span>
+              </span>
+              <a href="/data/omnitransit_1m_telemetry_dataset.xlsx" download class="btn-pill-secondary" style="font-size:11.5px; text-decoration:none; padding:6px 12px; display:inline-flex; align-items:center; gap:6px;">
+                <svg width="13" height="13" viewBox="0 0 16 16" fill="currentColor"><path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/><path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z"/></svg>
+                <span>Download 1M Dataset (Excel)</span>
+              </a>
+            </div>
+          </div>
+
+          <!-- Section 1: Trip Advisory Planner & Live Stream Bulletin Feed -->
+          <div class="advisory-grid-layout">
+            <!-- Left: Interactive Commuter Trip Advisory Recommender -->
+            <div class="advisory-card">
+              <h3>Dynamic Route Guidance &amp; Bypass Recommender</h3>
+              <p>Select your origin hub and destination to evaluate live queue wait-times and alternative corridors.</p>
+
+              <div class="advisory-trip-form">
+                <div class="advisory-field-group">
+                  <label>Origin Station</label>
+                  <select id="advisoryOriginSelect" class="advisory-select" onchange="updateTripAdvisoryAdvice()">
+                    <option value="KAL">Kalapatti Tech Hub (KAL)</option>
+                    <option value="GAN" selected>Gandhipuram Central (GAN)</option>
+                    <option value="TWN">Town Hall Commercial (TWN)</option>
+                    <option value="ARA">Arasur Industrial Junction (ARA)</option>
+                    <option value="SAR">Saravanampatti Tech Zone (SAR)</option>
+                    <option value="PEE">Peelamedu Metro Link (PEE)</option>
+                    <option value="SIN">Singanallur Hub (SIN)</option>
+                    <option value="UKK">Ukkadam Lake Terminal (UKK)</option>
+                  </select>
+                </div>
+
+                <div class="advisory-field-group">
+                  <label>Destination Hub</label>
+                  <select id="advisoryDestSelect" class="advisory-select" onchange="updateTripAdvisoryAdvice()">
+                    <option value="KAL" selected>Kalapatti Tech Hub (KAL)</option>
+                    <option value="GAN">Gandhipuram Central (GAN)</option>
+                    <option value="TWN">Town Hall Commercial (TWN)</option>
+                    <option value="ARA">Arasur Industrial Junction (ARA)</option>
+                    <option value="SAR">Saravanampatti Tech Zone (SAR)</option>
+                    <option value="PEE">Peelamedu Metro Link (PEE)</option>
+                    <option value="SIN">Singanallur Hub (SIN)</option>
+                    <option value="UKK">Ukkadam Lake Terminal (UKK)</option>
+                  </select>
+                </div>
+
+                <button type="button" class="btn-pill-primary" onclick="updateTripAdvisoryAdvice()" style="height:38px; padding:0 16px;">
+                  Get Real-Time Guidance
+                </button>
+              </div>
+
+              <!-- Recommendation Result Box -->
+              <div class="advisory-plan-result" id="advisoryResultBox">
+                <div class="advisory-route-match">
+                  <div>
+                    <div style="font-size:11px; text-transform:uppercase; letter-spacing:0.04em; color:var(--text-secondary); font-weight:600;">Recommended Primary Route</div>
+                    <strong style="font-size:15px; color:var(--accent-primary);" id="advPrimaryRouteName">Route R-101 (Town Hall - Kalapatti via Peelamedu)</strong>
+                  </div>
+                  <div class="advisory-savings-tag" id="advSavingsTag">
+                    <svg width="12" height="12" viewBox="0 0 16 16" fill="currentColor"><path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/></svg>
+                    <span id="advSavingsText">Saves ~14 min via R-105 Bypass</span>
+                  </div>
+                </div>
+
+                <div style="display:grid; grid-template-columns:repeat(4, 1fr); gap:10px; margin-top:4px;">
+                  <div style="background:#FFFFFF; border:1px solid #E2E8F0; padding:10px; border-radius:6px;">
+                    <div style="font-size:10.5px; color:var(--text-secondary);">Current Queue</div>
+                    <strong style="font-size:14px;" id="advQueuePax">78 commuters</strong>
+                  </div>
+                  <div style="background:#FFFFFF; border:1px solid #E2E8F0; padding:10px; border-radius:6px;">
+                    <div style="font-size:10.5px; color:var(--text-secondary);">Avg Wait Time</div>
+                    <strong style="font-size:14px; color:var(--accent-primary);" id="advWaitMins">5.4 mins</strong>
+                  </div>
+                  <div style="background:#FFFFFF; border:1px solid #E2E8F0; padding:10px; border-radius:6px;">
+                    <div style="font-size:10.5px; color:var(--text-secondary);">Corridor Crowding</div>
+                    <strong style="font-size:14px;" id="advCrowdStatus">Moderate (38%)</strong>
+                  </div>
+                  <div style="background:#FFFFFF; border:1px solid #E2E8F0; padding:10px; border-radius:6px;">
+                    <div style="font-size:10.5px; color:var(--text-secondary);">Active EV Fleet</div>
+                    <strong style="font-size:14px; color:var(--accent-success);" id="advFleetSoc">5 Units (84% SOC)</strong>
+                  </div>
+                </div>
+
+                <div style="background:#FFFFFF; border:1px solid #E2E8F0; border-radius:6px; padding:10px 12px; font-size:12px; color:var(--text-secondary);" id="advGuidanceNotice">
+                  <strong>Travel Advisory:</strong> High passenger transfer volume observed at Gandhipuram Central. Boarding Route R-105 provides express bypass around Avinashi Road traffic.
+                </div>
+              </div>
+            </div>
+
+            <!-- Right: Real-Time Telemetry Stream Bulletin Feed -->
+            <div class="advisory-card">
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px;">
+                <h3>Live Broadcast Telemetry Bulletin Feed</h3>
+                <span class="ticker-meta-badge" id="advisoryFeedTickBadge">Tick #1</span>
+              </div>
+              <p>Sequential alerts ingested line-by-line every 4 seconds from 1M dataset.</p>
+
+              <div class="advisory-live-feed" id="advisoryBulletinsFeed">
+                <!-- Bulletins prepended by JavaScript -->
+              </div>
+            </div>
+          </div>
+
+          <!-- Section 2: All 8 Arterial Corridors Live Advisory Matrix -->
+          <div class="advisory-card">
+            <h3>Coimbatore Arterial Corridors &mdash; Real-Time Congestion &amp; Bypass Status</h3>
+            <p>Live crowding levels, primary versus alternative routes, and headway recommendations across all corridors.</p>
+            <div class="corridors-advisory-grid" id="corridorsAdvisoryGrid">
+              <!-- Dynamically populated 8 corridors -->
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- =====================================================================
+           TAB 4: ADVANCED DIAGNOSTICS & ML (HIDDEN FROM NORMAL USERS)
+           ===================================================================== -->
+      <div id="tab-advanced" class="tab-pane" style="display:none;">
+        <div class="advanced-container">
+          <div class="advanced-header">
+            <div>
+              <h2>Engineering Diagnostics &amp; Machine Learning Studio (Admin Only)</h2>
+              <p style="color:var(--text-secondary); font-size:13px;">Advanced model retraining, MPC rolling horizon, 2,000,000-row SQLite inspector, and causal AI synthesis.</p>
+            </div>
+            <span class="desktop-status-pill nominal" id="trainStatusBadge">Model Ready</span>
+          </div>
+
+          <!-- Section 1: Online LightGBM Retraining Studio -->
+          <div class="advanced-card">
+            <h3>Online Blocked LightGBM Retrainer</h3>
+            <p>Retrain the gradient-boosted demand estimator calibrated on empirical commuter check-ins.</p>
+
+            <div style="display:grid; grid-template-columns:1fr 1fr auto; gap:20px; align-items:end; margin-bottom:16px;">
+              <div>
+                <label style="font-size:12px; color:var(--text-secondary); display:block; margin-bottom:4px;">Estimators: <strong id="lblTrees">25 Trees</strong></label>
+                <input type="range" id="sliderTrees" min="5" max="100" value="25" oninput="document.getElementById('lblTrees').textContent=this.value+' Trees'" style="width:100%; accent-color:var(--accent-primary);" />
+              </div>
+              <div>
+                <label style="font-size:12px; color:var(--text-secondary); display:block; margin-bottom:4px;">Learning Rate: <strong id="lblLr">0.25</strong></label>
+                <input type="range" id="sliderLr" min="5" max="100" value="25" oninput="document.getElementById('lblLr').textContent=(this.value/100).toFixed(2)" style="width:100%; accent-color:var(--accent-primary);" />
+              </div>
+              <button class="btn-pill-primary" id="btnRetrainModel" onclick="triggerModelRetraining()">
+                Retrain Model
+              </button>
+            </div>
+
+            <div style="display:grid; grid-template-columns:repeat(5, 1fr); gap:12px;">
+              <div style="background:#F8F9FA; padding:12px; border-radius:6px;">Partition: <strong style="color:var(--accent-primary);">80% Tr / 20% Te</strong></div>
+              <div style="background:#F8F9FA; padding:12px; border-radius:6px;">Latency: <strong id="trainTimeMetric">5.1 ms</strong></div>
+              <div style="background:#F8F9FA; padding:12px; border-radius:6px;">Holdout Demand R²: <strong id="trainDemandR2Metric" style="color:var(--accent-primary);">0.871</strong></div>
+              <div style="background:#F8F9FA; padding:12px; border-radius:6px;">Holdout Wait R²: <strong id="trainWaitR2Metric" style="color:var(--accent-success);">0.959</strong></div>
+              <div style="background:#F8F9FA; padding:12px; border-radius:6px;">Holdout Wait MAE: <strong id="trainWaitMaeMetric">0.79m</strong></div>
+            </div>
+
+            <div id="trainLogBox" style="margin-top:12px; font-family:var(--font-mono); font-size:11px; color:var(--text-secondary); background:#F8F9FA; padding:8px 12px; border-radius:4px;">
+              [ML_STUDIO] Blocked Gradient Boosting Regressor ready.
+            </div>
+          </div>
+
+          <!-- Section 2: Model Predictive Control (MPC) 60-Min Horizon -->
+          <div class="advanced-card">
+            <h3>Model Predictive Control (MPC) Horizon</h3>
+            <p>Rolling 60-minute lookahead horizon evaluated across 10-minute discrete intervals.</p>
+            <div style="display:flex; gap:8px; margin-bottom:16px;">
+              <button class="btn-pill-primary" id="btnMpcModeAdaptive" onclick="selectMpcMode('ADAPTIVE_MPC')">Adaptive MPC</button>
+              <button class="btn-pill-secondary" id="btnMpcModeReactive" onclick="selectMpcMode('REACTIVE_SWARM')">Reactive Swarm</button>
+              <button class="btn-pill-secondary" id="btnMpcModeBaseline" onclick="selectMpcMode('UNCONTROLLED_BASELINE')">Static Baseline</button>
+            </div>
+
+            <div style="display:grid; grid-template-columns:repeat(5, 1fr); gap:12px; margin-bottom:16px;">
+              <div style="background:#F8F9FA; padding:12px; border-radius:6px;">Initial Wait: <strong id="mpcInitialWait">22.4m</strong></div>
+              <div style="background:#F8F9FA; padding:12px; border-radius:6px;">Final Wait: <strong id="mpcFinalWait" style="color:var(--accent-success);">9.8m</strong></div>
+              <div style="background:#F8F9FA; padding:12px; border-radius:6px;">Peak Wait: <strong id="mpcPeakWait" style="color:var(--accent-danger);">22.4m</strong></div>
+              <div style="background:#F8F9FA; padding:12px; border-radius:6px;">Stability: <strong id="mpcStabilityIndex" style="color:var(--accent-primary);">92.4%</strong></div>
+              <div style="background:#F8F9FA; padding:12px; border-radius:6px;">Denied Pax: <strong id="mpcDeniedPax">18</strong></div>
+            </div>
+            <div id="mpcTimelineContainer"></div>
+          </div>
+
+          <!-- Section 3: Robust Optimization Uncertainty Matrix -->
+          <div class="advanced-card">
+            <h3>Robust Uncertainty Evaluation Matrix</h3>
+            <p>Evaluates scheduling strategies under Minimax Regret across 4 uncertainty realizations.</p>
+            <div class="clean-table-card">
+              <table class="clean-table">
+                <thead>
+                  <tr>
+                    <th>Strategy</th>
+                    <th>Fleet</th>
+                    <th>Expected Wait E[W]</th>
+                    <th>Worst-Case Wait</th>
+                    <th>Pax Left Behind</th>
+                    <th>Worst-Case Denied</th>
+                    <th>Resilience</th>
+                    <th>Minimax Regret</th>
+                  </tr>
+                </thead>
+                <tbody id="robustTableBody"></tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- Section 4: SQLite 2,000,000-Row Smart Blocks Query -->
+          <div class="advanced-card">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+              <div>
+                <h3>SQLite Smart Blocks Explorer (2M Rows)</h3>
+                <p style="margin-bottom:0;">Direct analytical query into blocked spatial-temporal database.</p>
+              </div>
+              <div style="display:flex; gap:8px;">
+                <select id="hubFilter" class="btn-pill-secondary" onchange="querySqliteBlocks()">
+                  <option value="ALL">All Hubs</option>
+                  <option value="KAL">Kalapatti (KAL)</option>
+                  <option value="GAN">Gandhipuram (GAN)</option>
+                  <option value="TWN">Town Hall (TWN)</option>
+                </select>
+                <select id="timeFilter" class="btn-pill-secondary" onchange="querySqliteBlocks()">
+                  <option value="ALL">All Time Buckets</option>
+                  <option value="PM_PEAK">PM Peak</option>
+                  <option value="AM_PEAK">AM Peak</option>
+                </select>
+                <select id="weatherFilter" class="btn-pill-secondary" onchange="querySqliteBlocks()">
+                  <option value="ALL">All Weathers</option>
+                  <option value="FLA">Flash Floods</option>
+                  <option value="CLR">Clear Skies</option>
+                </select>
+              </div>
+            </div>
+            <div class="clean-table-card">
+              <table class="clean-table">
+                <thead>
+                  <tr>
+                    <th>Block Key</th>
+                    <th>Hub</th>
+                    <th>Route</th>
+                    <th>Time</th>
+                    <th>Weather</th>
+                    <th>Rows</th>
+                    <th>Avg Demand</th>
+                    <th>Avg Wait</th>
+                    <th>Load %</th>
+                  </tr>
+                </thead>
+                <tbody id="blocksTableBody"></tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- Section 5: Causal AI Briefing -->
+          <div class="advanced-card">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+              <div>
+                <h3>Causal AI Architect Synthesis</h3>
+                <p style="margin-bottom:0;">Synthesizes executive memorandums with counterfactual transit explanations.</p>
+              </div>
+              <button class="btn-pill-primary" id="btnGenerateBrief" onclick="triggerGenAiBriefing()">
+                Synthesize Brief
+              </button>
+            </div>
+            <div id="briefingMarkdownContent" style="background:#F8F9FA; padding:16px; border-radius:6px; font-size:13px; min-height:100px;">
+              Press "Synthesize Brief" to run causal AI analysis.
+            </div>
+            <textarea id="briefingPromptBox" readonly style="display:none;"></textarea>
+          </div>
+
+          <!-- Hidden Compatibility IDs -->
+          <div style="display:none;">
+            <input type="range" id="sliderPop" value="45" />
+            <span id="lblPop">+45%</span>
+            <input type="range" id="sliderHour" value="18" />
+            <span id="lblHour">18:00</span>
+            <input type="checkbox" id="chkMetroFault" checked />
+            <select id="llmProvider"><option value="gemini">gemini</option></select>
+            <input type="password" id="llmApiKey" />
+            <div id="gazetteStream"></div>
+            <span id="kpiTokensTraded">0</span>
+            <span id="kpiGhostRoutes">0</span>
+            <span id="kpiEsgRevenue">$0</span>
+            <span id="kpiDatasetRows">2,000,000</span>
+            <span id="kpiEvGuardrail">EV Guardrail</span>
+            <span id="kpiWaitSub">15m</span>
+            <span id="kpiCriticalHubs">0</span>
+            <span id="operatorRole">Chief Transit Architect</span>
+            <span id="operatorName">K. Senthil Kumar</span>
+            <span id="operatorAvatar">SK</span>
+            <span id="jwtStatusBadge">VALID</span>
+            <span id="esgCo2Kg">0</span>
+            <span id="esgTreesEquiv">0</span>
+            <span id="esgTradableUsd">0</span>
+            <span id="esgGuardrailCount">0</span>
+            <span id="statTotalRows">2,000,000</span>
+            <span id="statSmartBlocks">128</span>
+            <span id="statBlockedGbmR2">0.967</span>
+            <span id="statSpeedup">42.8x</span>
+            <span id="robustRecommendationBadge">Strategy C</span>
+            <span id="robustMetricExpectedWait">9.8m</span>
+            <span id="robustMetricWorstWait">14.2m</span>
+            <span id="robustMetricResilience">94.8%</span>
+            <span id="robustMetricDenied">18</span>
+            <select id="predictHub"><option value="KAL">KAL</option></select>
+            <select id="predictTime"><option value="PM_PEAK">PM_PEAK</option></select>
+            <select id="predictWeather"><option value="FLA">FLA</option></select>
+            <input type="number" id="predictHeadway" value="12" />
+            <span id="predictedDemandVal">--</span>
+            <span id="predictedWaitVal">--</span>
+            <span id="predictedBountyVal">--</span>
+            <span id="predictedConfidenceVal">--</span>
+          </div>
+
+        </div>
+      </div>
+
+    </main>
+  </div>
+
+  <!-- GOOGLE MAPS API KEY CONFIGURATION MODAL -->
+  <div class="modal-overlay-flat" id="gmapsModal" style="display:none;">
+    <div class="modal-dialog-flat">
+      <div class="modal-header-flat">
+        <h3>Google Maps API Key Configuration</h3>
+        <button onclick="closeGoogleMapsKeyModal()" style="border:none; background:transparent; font-size:16px; cursor:pointer;" title="Close">&times;</button>
+      </div>
+      <div class="modal-body-flat">
+        <p style="color:var(--text-secondary); margin-bottom:14px; font-size:12.5px;">
+          Configure the <strong>Google Maps JavaScript API key</strong> for native Google Maps satellite, road, and terrain views with live transit routing for Coimbatore.
+        </p>
+        <div style="margin-bottom:14px;">
+          <label style="display:block; font-size:12px; font-weight:500; color:var(--text-secondary); margin-bottom:6px;">API Key</label>
+          <input type="password" id="modalGmapsKeyInput" placeholder="Google Maps API Key configured (Protected)" style="width:100%; height:36px; padding:0 12px; border:1px solid var(--chrome-border-mid); border-radius:6px; font-family:var(--font-mono); font-size:12px;" />
+        </div>
+        <div id="gmapsModalStatus" style="font-size:12px; min-height:18px;"></div>
+      </div>
+      <div class="modal-footer-flat">
+        <button type="button" class="btn-pill-secondary" onclick="closeGoogleMapsKeyModal()">Cancel</button>
+        <button type="button" class="btn-pill-primary" onclick="saveGoogleMapsKeyFromModal()">Save &amp; Activate Google Map</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- OPERATOR LOGIN MODAL (JWT HMAC-SHA256) -->
+  <div class="modal-overlay-flat" id="loginModal" style="display:none;">
+    <div class="modal-dialog-flat">
+      <div class="modal-header-flat">
+        <h3>Operator Security Credentials (JWT)</h3>
+        <button onclick="closeLoginModal()" style="border:none; background:transparent; font-size:16px; cursor:pointer;">✕</button>
+      </div>
+      <div class="modal-body-flat">
+        <p style="color:var(--text-secondary); margin-bottom:14px; font-size:12.5px;">
+          Transit operations require a cryptographically signed RFC 7519 JWT HMAC-SHA256 session.
+        </p>
+        <div style="display:flex; gap:8px; margin-bottom:14px;">
+          <button type="button" class="btn-pill-secondary" id="roleBtnAdmin" onclick="selectQuickRole('admin', 'omni2026')" style="font-size:11.5px;">Chief Architect</button>
+          <button type="button" class="btn-pill-secondary" id="roleBtnDispatcher" onclick="selectQuickRole('dispatcher', 'coimbatore2026')" style="font-size:11.5px;">Dispatcher</button>
+          <button type="button" class="btn-pill-secondary" id="roleBtnPlanner" onclick="selectQuickRole('planner', 'smartcity2026')" style="font-size:11.5px;">Planner</button>
+        </div>
+        <form onsubmit="handleOperatorLogin(event)">
+          <div style="margin-bottom:12px;">
+            <label style="display:block; font-size:12px; margin-bottom:4px;">Username</label>
+            <input type="text" id="authUsername" value="admin" required style="width:100%; height:34px; padding:0 10px; border:1px solid var(--chrome-border-mid); border-radius:6px;" />
+          </div>
+          <div style="margin-bottom:12px;">
+            <label style="display:block; font-size:12px; margin-bottom:4px;">Password</label>
+            <input type="password" id="authPassword" value="omni2026" required style="width:100%; height:34px; padding:0 10px; border:1px solid var(--chrome-border-mid); border-radius:6px;" />
+          </div>
+          <input type="hidden" id="authAgency" value="Coimbatore Metropolitan Transport Authority (CMTA)" />
+          <div id="loginStatusMsg" style="font-size:11px; min-height:16px; margin-bottom:8px;"></div>
+          <div class="modal-footer-flat" style="padding:10px 0 0 0; background:transparent; border-top:none;">
+            <button type="button" class="btn-pill-secondary" onclick="closeLoginModal()">Cancel</button>
+            <button type="submit" class="btn-pill-primary">Sign In &amp; Issue JWT</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Leaflet Fallback JS & App Scripts -->
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+  <script src="standalone_data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

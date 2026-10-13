@@ -1,0 +1,1087 @@
+{
+  "model_type": "Blocked-Histogram Gradient Boosted Decision Ensemble (25 Trees)",
+  "trained_on_rows": 2000000,
+  "unique_smart_blocks": 128,
+  "compression_ratio": "15625:1 (128 blocks from 2,000,000 rows)",
+  "training_time_ms": 5.78,
+  "metrics": {
+    "demand_r2_score": 0.9124,
+    "demand_mae_passengers": 31.19,
+    "wait_time_r2_score": 0.9668,
+    "wait_time_mae_mins": 0.71
+  },
+  "global_mean_demand": 251.63,
+  "global_mean_wait_mins": 18.28,
+  "feature_weights": {
+    "hub_demand_delta": {
+      "KAL": 55.26,
+      "GAN": 137.84,
+      "TWN": 44.23,
+      "ARA": -153.01,
+      "SAR": 106.17,
+      "PEE": 43.04,
+      "SIN": -98.21,
+      "UKK": -136.47
+    },
+    "time_bucket_demand_delta": {
+      "AM_PEAK": 40.38,
+      "PM_PEAK": 80.34,
+      "MIDDAY": -54.83,
+      "OFF_PEAK": -172.45
+    },
+    "weather_demand_delta": {
+      "CLE": -24.65,
+      "LIG": 25.5,
+      "FLA": 129.04,
+      "EXT": 2.43
+    },
+    "hub_wait_delta": {
+      "KAL": 2.24,
+      "GAN": 3.33,
+      "TWN": 2.03,
+      "ARA": -5.52,
+      "SAR": 2.99,
+      "PEE": 2.0,
+      "SIN": -2.53,
+      "UKK": -4.56
+    },
+    "time_bucket_wait_delta": {
+      "AM_PEAK": 1.56,
+      "PM_PEAK": 2.29,
+      "MIDDAY": -1.14,
+      "OFF_PEAK": -6.2
+    },
+    "weather_wait_delta": {
+      "CLE": -1.51,
+      "LIG": 1.73,
+      "FLA": 7.39,
+      "EXT": 0.28
+    }
+  },
+  "block_predictions": {
+    "ARA_R-202_MIDDAY_CLE": {
+      "count": 32113,
+      "empirical_demand": 69.6,
+      "predicted_demand": 19.1,
+      "empirical_wait_mins": 9.7,
+      "predicted_wait_mins": 10.1,
+      "empirical_load_pct": 48.5
+    },
+    "SAR_R-104_AM_PEAK_FLA": {
+      "count": 5874,
+      "empirical_demand": 627.6,
+      "predicted_demand": 527.2,
+      "empirical_wait_mins": 29.5,
+      "predicted_wait_mins": 30.2,
+      "empirical_load_pct": 134.4
+    },
+    "TWN_R-103_AM_PEAK_CLE": {
+      "count": 47480,
+      "empirical_demand": 309.1,
+      "predicted_demand": 311.6,
+      "empirical_wait_mins": 20.7,
+      "predicted_wait_mins": 20.4,
+      "empirical_load_pct": 124.0
+    },
+    "SIN_R-106_OFF_PEAK_CLE": {
+      "count": 26046,
+      "empirical_demand": 43.7,
+      "predicted_demand": -43.7,
+      "empirical_wait_mins": 9.2,
+      "predicted_wait_mins": 8.0,
+      "empirical_load_pct": 30.3
+    },
+    "TWN_R-103_PM_PEAK_CLE": {
+      "count": 53707,
+      "empirical_demand": 352.4,
+      "predicted_demand": 351.5,
+      "empirical_wait_mins": 21.5,
+      "predicted_wait_mins": 21.1,
+      "empirical_load_pct": 127.6
+    },
+    "PEE_R-105_PM_PEAK_CLE": {
+      "count": 54512,
+      "empirical_demand": 350.8,
+      "predicted_demand": 350.4,
+      "empirical_wait_mins": 21.5,
+      "predicted_wait_mins": 21.1,
+      "empirical_load_pct": 127.6
+    },
+    "SIN_R-106_MIDDAY_CLE": {
+      "count": 32558,
+      "empirical_demand": 108.0,
+      "predicted_demand": 73.9,
+      "empirical_wait_mins": 12.2,
+      "predicted_wait_mins": 13.1,
+      "empirical_load_pct": 72.1
+    },
+    "ARA_R-202_OFF_PEAK_EXT": {
+      "count": 2858,
+      "empirical_demand": 30.8,
+      "predicted_demand": -71.4,
+      "empirical_wait_mins": 10.3,
+      "predicted_wait_mins": 6.8,
+      "empirical_load_pct": 22.7
+    },
+    "UKK_R-204_PM_PEAK_CLE": {
+      "count": 54348,
+      "empirical_demand": 136.9,
+      "predicted_demand": 170.9,
+      "empirical_wait_mins": 14.0,
+      "predicted_wait_mins": 14.5,
+      "empirical_load_pct": 86.1
+    },
+    "SAR_R-104_OFF_PEAK_FLA": {
+      "count": 3253,
+      "empirical_demand": 170.0,
+      "predicted_demand": 314.4,
+      "empirical_wait_mins": 21.4,
+      "predicted_wait_mins": 22.5,
+      "empirical_load_pct": 82.0
+    },
+    "KAL_R-101_MIDDAY_CLE": {
+      "count": 32712,
+      "empirical_demand": 216.0,
+      "predicted_demand": 227.4,
+      "empirical_wait_mins": 18.0,
+      "predicted_wait_mins": 17.9,
+      "empirical_load_pct": 110.2
+    },
+    "SIN_R-106_PM_PEAK_CLE": {
+      "count": 53684,
+      "empirical_demand": 182.6,
+      "predicted_demand": 209.1,
+      "empirical_wait_mins": 16.5,
+      "predicted_wait_mins": 16.5,
+      "empirical_load_pct": 102.0
+    },
+    "GAN_R-102_OFF_PEAK_CLE": {
+      "count": 26071,
+      "empirical_demand": 109.5,
+      "predicted_demand": 192.4,
+      "empirical_wait_mins": 12.3,
+      "predicted_wait_mins": 13.9,
+      "empirical_load_pct": 63.2
+    },
+    "UKK_R-204_AM_PEAK_LIG": {
+      "count": 15529,
+      "empirical_demand": 147.7,
+      "predicted_demand": 181.0,
+      "empirical_wait_mins": 17.1,
+      "predicted_wait_mins": 17.0,
+      "empirical_load_pct": 91.2
+    },
+    "SIN_R-106_MIDDAY_LIG": {
+      "count": 10612,
+      "empirical_demand": 131.8,
+      "predicted_demand": 124.1,
+      "empirical_wait_mins": 15.5,
+      "predicted_wait_mins": 16.3,
+      "empirical_load_pct": 81.9
+    },
+    "UKK_R-204_MIDDAY_CLE": {
+      "count": 32042,
+      "empirical_demand": 80.8,
+      "predicted_demand": 35.7,
+      "empirical_wait_mins": 10.4,
+      "predicted_wait_mins": 11.1,
+      "empirical_load_pct": 56.1
+    },
+    "GAN_R-102_PM_PEAK_CLE": {
+      "count": 54576,
+      "empirical_demand": 463.5,
+      "predicted_demand": 445.2,
+      "empirical_wait_mins": 22.7,
+      "predicted_wait_mins": 22.4,
+      "empirical_load_pct": 132.4
+    },
+    "SIN_R-106_PM_PEAK_LIG": {
+      "count": 17568,
+      "empirical_demand": 222.5,
+      "predicted_demand": 259.3,
+      "empirical_wait_mins": 20.1,
+      "predicted_wait_mins": 19.8,
+      "empirical_load_pct": 111.4
+    },
+    "ARA_R-202_AM_PEAK_CLE": {
+      "count": 47637,
+      "empirical_demand": 103.4,
+      "predicted_demand": 114.4,
+      "empirical_wait_mins": 11.5,
+      "predicted_wait_mins": 12.8,
+      "empirical_load_pct": 68.8
+    },
+    "ARA_R-202_PM_PEAK_CLE": {
+      "count": 53962,
+      "empirical_demand": 117.5,
+      "predicted_demand": 154.3,
+      "empirical_wait_mins": 12.9,
+      "predicted_wait_mins": 13.5,
+      "empirical_load_pct": 77.6
+    },
+    "SAR_R-104_OFF_PEAK_EXT": {
+      "count": 2731,
+      "empirical_demand": 112.4,
+      "predicted_demand": 187.8,
+      "empirical_wait_mins": 14.2,
+      "predicted_wait_mins": 15.4,
+      "empirical_load_pct": 66.1
+    },
+    "SAR_R-104_MIDDAY_LIG": {
+      "count": 10790,
+      "empirical_demand": 309.9,
+      "predicted_demand": 328.5,
+      "empirical_wait_mins": 22.5,
+      "predicted_wait_mins": 21.9,
+      "empirical_load_pct": 123.0
+    },
+    "KAL_R-101_PM_PEAK_CLE": {
+      "count": 54150,
+      "empirical_demand": 365.6,
+      "predicted_demand": 362.6,
+      "empirical_wait_mins": 21.8,
+      "predicted_wait_mins": 21.3,
+      "empirical_load_pct": 128.7
+    },
+    "SAR_R-104_AM_PEAK_CLE": {
+      "count": 47691,
+      "empirical_demand": 374.2,
+      "predicted_demand": 373.5,
+      "empirical_wait_mins": 21.8,
+      "predicted_wait_mins": 21.3,
+      "empirical_load_pct": 129.1
+    },
+    "SAR_R-104_MIDDAY_CLE": {
+      "count": 32797,
+      "empirical_demand": 252.5,
+      "predicted_demand": 278.3,
+      "empirical_wait_mins": 19.3,
+      "predicted_wait_mins": 18.6,
+      "empirical_load_pct": 117.0
+    },
+    "TWN_R-103_OFF_PEAK_CLE": {
+      "count": 25967,
+      "empirical_demand": 84.3,
+      "predicted_demand": 98.8,
+      "empirical_wait_mins": 11.1,
+      "predicted_wait_mins": 12.6,
+      "empirical_load_pct": 52.2
+    },
+    "PEE_R-105_MIDDAY_LIG": {
+      "count": 10394,
+      "empirical_demand": 251.7,
+      "predicted_demand": 265.3,
+      "empirical_wait_mins": 20.9,
+      "predicted_wait_mins": 20.9,
+      "empirical_load_pct": 115.3
+    },
+    "GAN_R-102_AM_PEAK_CLE": {
+      "count": 47895,
+      "empirical_demand": 407.9,
+      "predicted_demand": 405.2,
+      "empirical_wait_mins": 22.1,
+      "predicted_wait_mins": 21.7,
+      "empirical_load_pct": 130.7
+    },
+    "PEE_R-105_AM_PEAK_FLA": {
+      "count": 5826,
+      "empirical_demand": 521.1,
+      "predicted_demand": 464.1,
+      "empirical_wait_mins": 29.1,
+      "predicted_wait_mins": 29.2,
+      "empirical_load_pct": 132.9
+    },
+    "TWN_R-103_PM_PEAK_LIG": {
+      "count": 17640,
+      "empirical_demand": 430.2,
+      "predicted_demand": 401.7,
+      "empirical_wait_mins": 24.5,
+      "predicted_wait_mins": 24.3,
+      "empirical_load_pct": 131.8
+    },
+    "UKK_R-204_PM_PEAK_FLA": {
+      "count": 6676,
+      "empirical_demand": 229.9,
+      "predicted_demand": 324.5,
+      "empirical_wait_mins": 25.0,
+      "predicted_wait_mins": 23.4,
+      "empirical_load_pct": 114.1
+    },
+    "GAN_R-102_MIDDAY_EXT": {
+      "count": 3634,
+      "empirical_demand": 306.5,
+      "predicted_demand": 337.1,
+      "empirical_wait_mins": 21.8,
+      "predicted_wait_mins": 20.8,
+      "empirical_load_pct": 124.0
+    },
+    "GAN_R-102_MIDDAY_CLE": {
+      "count": 32045,
+      "empirical_demand": 274.7,
+      "predicted_demand": 310.0,
+      "empirical_wait_mins": 20.0,
+      "predicted_wait_mins": 19.0,
+      "empirical_load_pct": 120.2
+    },
+    "TWN_R-103_MIDDAY_CLE": {
+      "count": 33032,
+      "empirical_demand": 208.8,
+      "predicted_demand": 216.4,
+      "empirical_wait_mins": 17.7,
+      "predicted_wait_mins": 17.7,
+      "empirical_load_pct": 108.5
+    },
+    "PEE_R-105_MIDDAY_CLE": {
+      "count": 31916,
+      "empirical_demand": 207.3,
+      "predicted_demand": 215.2,
+      "empirical_wait_mins": 17.7,
+      "predicted_wait_mins": 17.6,
+      "empirical_load_pct": 108.4
+    },
+    "PEE_R-105_AM_PEAK_LIG": {
+      "count": 15495,
+      "empirical_demand": 376.6,
+      "predicted_demand": 360.6,
+      "empirical_wait_mins": 24.3,
+      "predicted_wait_mins": 23.6,
+      "empirical_load_pct": 129.4
+    },
+    "SIN_R-106_AM_PEAK_CLE": {
+      "count": 47843,
+      "empirical_demand": 160.0,
+      "predicted_demand": 169.2,
+      "empirical_wait_mins": 15.1,
+      "predicted_wait_mins": 15.8,
+      "empirical_load_pct": 94.1
+    },
+    "SAR_R-104_PM_PEAK_CLE": {
+      "count": 53638,
+      "empirical_demand": 426.1,
+      "predicted_demand": 413.5,
+      "empirical_wait_mins": 22.4,
+      "predicted_wait_mins": 22.0,
+      "empirical_load_pct": 131.4
+    },
+    "KAL_R-101_AM_PEAK_CLE": {
+      "count": 47801,
+      "empirical_demand": 321.5,
+      "predicted_demand": 322.6,
+      "empirical_wait_mins": 20.9,
+      "predicted_wait_mins": 20.6,
+      "empirical_load_pct": 125.3
+    },
+    "ARA_R-202_OFF_PEAK_FLA": {
+      "count": 3218,
+      "empirical_demand": 46.8,
+      "predicted_demand": 55.2,
+      "empirical_wait_mins": 16.4,
+      "predicted_wait_mins": 14.0,
+      "empirical_load_pct": 33.8
+    },
+    "KAL_R-101_PM_PEAK_LIG": {
+      "count": 17842,
+      "empirical_demand": 446.9,
+      "predicted_demand": 412.7,
+      "empirical_wait_mins": 24.4,
+      "predicted_wait_mins": 24.5,
+      "empirical_load_pct": 132.1
+    },
+    "PEE_R-105_PM_PEAK_LIG": {
+      "count": 17648,
+      "empirical_demand": 427.1,
+      "predicted_demand": 400.5,
+      "empirical_wait_mins": 24.3,
+      "predicted_wait_mins": 24.3,
+      "empirical_load_pct": 131.3
+    },
+    "UKK_R-204_AM_PEAK_FLA": {
+      "count": 5857,
+      "empirical_demand": 202.3,
+      "predicted_demand": 284.6,
+      "empirical_wait_mins": 23.6,
+      "predicted_wait_mins": 22.7,
+      "empirical_load_pct": 106.2
+    },
+    "SAR_R-104_PM_PEAK_LIG": {
+      "count": 17732,
+      "empirical_demand": 521.4,
+      "predicted_demand": 463.6,
+      "empirical_wait_mins": 24.8,
+      "predicted_wait_mins": 25.3,
+      "empirical_load_pct": 133.7
+    },
+    "KAL_R-101_PM_PEAK_EXT": {
+      "count": 5513,
+      "empirical_demand": 409.5,
+      "predicted_demand": 389.7,
+      "empirical_wait_mins": 23.4,
+      "predicted_wait_mins": 23.1,
+      "empirical_load_pct": 130.9
+    },
+    "KAL_R-101_OFF_PEAK_CLE": {
+      "count": 26065,
+      "empirical_demand": 86.8,
+      "predicted_demand": 109.8,
+      "empirical_wait_mins": 11.3,
+      "predicted_wait_mins": 12.8,
+      "empirical_load_pct": 54.0
+    },
+    "GAN_R-102_MIDDAY_LIG": {
+      "count": 10581,
+      "empirical_demand": 337.1,
+      "predicted_demand": 360.1,
+      "empirical_wait_mins": 23.1,
+      "predicted_wait_mins": 22.2,
+      "empirical_load_pct": 125.4
+    },
+    "SIN_R-106_OFF_PEAK_LIG": {
+      "count": 8396,
+      "empirical_demand": 53.2,
+      "predicted_demand": 6.5,
+      "empirical_wait_mins": 11.9,
+      "predicted_wait_mins": 11.3,
+      "empirical_load_pct": 36.9
+    },
+    "UKK_R-204_MIDDAY_LIG": {
+      "count": 10485,
+      "empirical_demand": 98.9,
+      "predicted_demand": 85.8,
+      "empirical_wait_mins": 13.4,
+      "predicted_wait_mins": 14.3,
+      "empirical_load_pct": 65.6
+    },
+    "ARA_R-202_OFF_PEAK_CLE": {
+      "count": 25887,
+      "empirical_demand": 28.1,
+      "predicted_demand": -98.5,
+      "empirical_wait_mins": 8.8,
+      "predicted_wait_mins": 5.1,
+      "empirical_load_pct": 20.5
+    },
+    "ARA_R-202_PM_PEAK_LIG": {
+      "count": 17946,
+      "empirical_demand": 143.3,
+      "predicted_demand": 204.5,
+      "empirical_wait_mins": 16.0,
+      "predicted_wait_mins": 16.8,
+      "empirical_load_pct": 87.7
+    },
+    "PEE_R-105_AM_PEAK_CLE": {
+      "count": 47960,
+      "empirical_demand": 309.3,
+      "predicted_demand": 310.4,
+      "empirical_wait_mins": 20.6,
+      "predicted_wait_mins": 20.3,
+      "empirical_load_pct": 124.0
+    },
+    "SAR_R-104_OFF_PEAK_LIG": {
+      "count": 8584,
+      "empirical_demand": 123.8,
+      "predicted_demand": 210.9,
+      "empirical_wait_mins": 15.3,
+      "predicted_wait_mins": 16.8,
+      "empirical_load_pct": 69.4
+    },
+    "TWN_R-103_MIDDAY_LIG": {
+      "count": 10538,
+      "empirical_demand": 254.3,
+      "predicted_demand": 266.5,
+      "empirical_wait_mins": 21.1,
+      "predicted_wait_mins": 20.9,
+      "empirical_load_pct": 115.7
+    },
+    "TWN_R-103_OFF_PEAK_FLA": {
+      "count": 3332,
+      "empirical_demand": 140.3,
+      "predicted_demand": 252.4,
+      "empirical_wait_mins": 20.5,
+      "predicted_wait_mins": 21.5,
+      "empirical_load_pct": 74.7
+    },
+    "PEE_R-105_OFF_PEAK_EXT": {
+      "count": 2929,
+      "empirical_demand": 94.3,
+      "predicted_demand": 124.7,
+      "empirical_wait_mins": 13.1,
+      "predicted_wait_mins": 14.4,
+      "empirical_load_pct": 58.5
+    },
+    "ARA_R-202_PM_PEAK_EXT": {
+      "count": 6081,
+      "empirical_demand": 131.4,
+      "predicted_demand": 181.4,
+      "empirical_wait_mins": 14.5,
+      "predicted_wait_mins": 15.3,
+      "empirical_load_pct": 83.3
+    },
+    "UKK_R-204_OFF_PEAK_CLE": {
+      "count": 26144,
+      "empirical_demand": 32.4,
+      "predicted_demand": -81.9,
+      "empirical_wait_mins": 8.8,
+      "predicted_wait_mins": 6.0,
+      "empirical_load_pct": 22.9
+    },
+    "UKK_R-204_OFF_PEAK_EXT": {
+      "count": 2869,
+      "empirical_demand": 35.8,
+      "predicted_demand": -54.9,
+      "empirical_wait_mins": 10.5,
+      "predicted_wait_mins": 7.8,
+      "empirical_load_pct": 26.5
+    },
+    "KAL_R-101_OFF_PEAK_LIG": {
+      "count": 8663,
+      "empirical_demand": 107.3,
+      "predicted_demand": 159.9,
+      "empirical_wait_mins": 14.7,
+      "predicted_wait_mins": 16.1,
+      "empirical_load_pct": 63.8
+    },
+    "ARA_R-202_AM_PEAK_LIG": {
+      "count": 15646,
+      "empirical_demand": 126.6,
+      "predicted_demand": 164.5,
+      "empirical_wait_mins": 16.0,
+      "predicted_wait_mins": 16.1,
+      "empirical_load_pct": 83.1
+    },
+    "PEE_R-105_OFF_PEAK_CLE": {
+      "count": 26296,
+      "empirical_demand": 82.9,
+      "predicted_demand": 97.6,
+      "empirical_wait_mins": 11.0,
+      "predicted_wait_mins": 12.6,
+      "empirical_load_pct": 51.9
+    },
+    "UKK_R-204_OFF_PEAK_LIG": {
+      "count": 8492,
+      "empirical_demand": 40.0,
+      "predicted_demand": -31.8,
+      "empirical_wait_mins": 11.2,
+      "predicted_wait_mins": 9.2,
+      "empirical_load_pct": 28.4
+    },
+    "TWN_R-103_MIDDAY_FLA": {
+      "count": 4072,
+      "empirical_demand": 352.7,
+      "predicted_demand": 370.1,
+      "empirical_wait_mins": 27.2,
+      "predicted_wait_mins": 26.6,
+      "empirical_load_pct": 126.3
+    },
+    "GAN_R-102_AM_PEAK_LIG": {
+      "count": 15549,
+      "empirical_demand": 498.5,
+      "predicted_demand": 455.4,
+      "empirical_wait_mins": 25.2,
+      "predicted_wait_mins": 24.9,
+      "empirical_load_pct": 133.2
+    },
+    "UKK_R-204_AM_PEAK_CLE": {
+      "count": 47245,
+      "empirical_demand": 120.4,
+      "predicted_demand": 130.9,
+      "empirical_wait_mins": 12.7,
+      "predicted_wait_mins": 13.8,
+      "empirical_load_pct": 77.7
+    },
+    "UKK_R-204_PM_PEAK_EXT": {
+      "count": 5994,
+      "empirical_demand": 153.5,
+      "predicted_demand": 197.9,
+      "empirical_wait_mins": 16.1,
+      "predicted_wait_mins": 16.3,
+      "empirical_load_pct": 93.1
+    },
+    "GAN_R-102_OFF_PEAK_EXT": {
+      "count": 2854,
+      "empirical_demand": 122.4,
+      "predicted_demand": 219.4,
+      "empirical_wait_mins": 14.5,
+      "predicted_wait_mins": 15.7,
+      "empirical_load_pct": 69.2
+    },
+    "KAL_R-101_AM_PEAK_EXT": {
+      "count": 4967,
+      "empirical_demand": 360.2,
+      "predicted_demand": 349.7,
+      "empirical_wait_mins": 22.6,
+      "predicted_wait_mins": 22.4,
+      "empirical_load_pct": 127.6
+    },
+    "SIN_R-106_AM_PEAK_LIG": {
+      "count": 15331,
+      "empirical_demand": 194.2,
+      "predicted_demand": 219.3,
+      "empirical_wait_mins": 19.7,
+      "predicted_wait_mins": 19.0,
+      "empirical_load_pct": 106.3
+    },
+    "TWN_R-103_AM_PEAK_LIG": {
+      "count": 15402,
+      "empirical_demand": 376.2,
+      "predicted_demand": 361.7,
+      "empirical_wait_mins": 24.4,
+      "predicted_wait_mins": 23.6,
+      "empirical_load_pct": 129.6
+    },
+    "SAR_R-104_AM_PEAK_LIG": {
+      "count": 15814,
+      "empirical_demand": 456.9,
+      "predicted_demand": 423.7,
+      "empirical_wait_mins": 24.9,
+      "predicted_wait_mins": 24.6,
+      "empirical_load_pct": 132.2
+    },
+    "SIN_R-106_OFF_PEAK_FLA": {
+      "count": 3281,
+      "empirical_demand": 73.1,
+      "predicted_demand": 110.0,
+      "empirical_wait_mins": 17.7,
+      "predicted_wait_mins": 16.9,
+      "empirical_load_pct": 49.1
+    },
+    "GAN_R-102_PM_PEAK_LIG": {
+      "count": 17945,
+      "empirical_demand": 566.2,
+      "predicted_demand": 495.3,
+      "empirical_wait_mins": 24.9,
+      "predicted_wait_mins": 25.6,
+      "empirical_load_pct": 134.0
+    },
+    "TWN_R-103_AM_PEAK_FLA": {
+      "count": 5942,
+      "empirical_demand": 521.6,
+      "predicted_demand": 465.3,
+      "empirical_wait_mins": 29.0,
+      "predicted_wait_mins": 29.3,
+      "empirical_load_pct": 133.0
+    },
+    "PEE_R-105_MIDDAY_EXT": {
+      "count": 3518,
+      "empirical_demand": 232.0,
+      "predicted_demand": 242.3,
+      "empirical_wait_mins": 19.4,
+      "predicted_wait_mins": 19.4,
+      "empirical_load_pct": 112.7
+    },
+    "ARA_R-202_MIDDAY_LIG": {
+      "count": 10538,
+      "empirical_demand": 85.2,
+      "predicted_demand": 69.3,
+      "empirical_wait_mins": 12.5,
+      "predicted_wait_mins": 13.4,
+      "empirical_load_pct": 57.4
+    },
+    "SAR_R-104_PM_PEAK_EXT": {
+      "count": 5618,
+      "empirical_demand": 476.4,
+      "predicted_demand": 440.6,
+      "empirical_wait_mins": 23.7,
+      "predicted_wait_mins": 23.8,
+      "empirical_load_pct": 132.8
+    },
+    "SIN_R-106_OFF_PEAK_EXT": {
+      "count": 2926,
+      "empirical_demand": 49.3,
+      "predicted_demand": -16.6,
+      "empirical_wait_mins": 11.1,
+      "predicted_wait_mins": 9.8,
+      "empirical_load_pct": 35.1
+    },
+    "UKK_R-204_AM_PEAK_EXT": {
+      "count": 5152,
+      "empirical_demand": 135.3,
+      "predicted_demand": 158.0,
+      "empirical_wait_mins": 15.2,
+      "predicted_wait_mins": 15.6,
+      "empirical_load_pct": 85.5
+    },
+    "TWN_R-103_OFF_PEAK_EXT": {
+      "count": 2890,
+      "empirical_demand": 93.8,
+      "predicted_demand": 125.8,
+      "empirical_wait_mins": 13.4,
+      "predicted_wait_mins": 14.4,
+      "empirical_load_pct": 58.8
+    },
+    "PEE_R-105_AM_PEAK_EXT": {
+      "count": 5396,
+      "empirical_demand": 345.1,
+      "predicted_demand": 337.5,
+      "empirical_wait_mins": 22.5,
+      "predicted_wait_mins": 22.1,
+      "empirical_load_pct": 126.6
+    },
+    "SIN_R-106_AM_PEAK_FLA": {
+      "count": 5835,
+      "empirical_demand": 270.9,
+      "predicted_demand": 322.8,
+      "empirical_wait_mins": 25.9,
+      "predicted_wait_mins": 24.7,
+      "empirical_load_pct": 118.4
+    },
+    "ARA_R-202_AM_PEAK_EXT": {
+      "count": 5253,
+      "empirical_demand": 116.0,
+      "predicted_demand": 141.4,
+      "empirical_wait_mins": 13.9,
+      "predicted_wait_mins": 14.6,
+      "empirical_load_pct": 76.1
+    },
+    "ARA_R-202_AM_PEAK_FLA": {
+      "count": 5944,
+      "empirical_demand": 173.8,
+      "predicted_demand": 268.0,
+      "empirical_wait_mins": 22.2,
+      "predicted_wait_mins": 21.7,
+      "empirical_load_pct": 98.2
+    },
+    "UKK_R-204_PM_PEAK_LIG": {
+      "count": 17899,
+      "empirical_demand": 167.8,
+      "predicted_demand": 221.0,
+      "empirical_wait_mins": 17.4,
+      "predicted_wait_mins": 17.7,
+      "empirical_load_pct": 96.5
+    },
+    "PEE_R-105_PM_PEAK_EXT": {
+      "count": 5915,
+      "empirical_demand": 392.1,
+      "predicted_demand": 377.4,
+      "empirical_wait_mins": 23.2,
+      "predicted_wait_mins": 22.8,
+      "empirical_load_pct": 130.3
+    },
+    "GAN_R-102_AM_PEAK_FLA": {
+      "count": 5941,
+      "empirical_demand": 687.0,
+      "predicted_demand": 558.9,
+      "empirical_wait_mins": 29.4,
+      "predicted_wait_mins": 30.6,
+      "empirical_load_pct": 134.7
+    },
+    "GAN_R-102_OFF_PEAK_LIG": {
+      "count": 8551,
+      "empirical_demand": 134.4,
+      "predicted_demand": 242.5,
+      "empirical_wait_mins": 15.7,
+      "predicted_wait_mins": 17.1,
+      "empirical_load_pct": 72.7
+    },
+    "SIN_R-106_MIDDAY_EXT": {
+      "count": 3541,
+      "empirical_demand": 120.4,
+      "predicted_demand": 101.0,
+      "empirical_wait_mins": 13.4,
+      "predicted_wait_mins": 14.9,
+      "empirical_load_pct": 75.9
+    },
+    "KAL_R-101_AM_PEAK_LIG": {
+      "count": 15740,
+      "empirical_demand": 393.4,
+      "predicted_demand": 372.8,
+      "empirical_wait_mins": 24.5,
+      "predicted_wait_mins": 23.8,
+      "empirical_load_pct": 130.2
+    },
+    "PEE_R-105_OFF_PEAK_FLA": {
+      "count": 3185,
+      "empirical_demand": 137.9,
+      "predicted_demand": 251.3,
+      "empirical_wait_mins": 20.6,
+      "predicted_wait_mins": 21.5,
+      "empirical_load_pct": 73.9
+    },
+    "ARA_R-202_PM_PEAK_FLA": {
+      "count": 6638,
+      "empirical_demand": 196.0,
+      "predicted_demand": 308.0,
+      "empirical_wait_mins": 23.3,
+      "predicted_wait_mins": 22.4,
+      "empirical_load_pct": 106.1
+    },
+    "PEE_R-105_OFF_PEAK_LIG": {
+      "count": 8388,
+      "empirical_demand": 102.3,
+      "predicted_demand": 147.7,
+      "empirical_wait_mins": 14.4,
+      "predicted_wait_mins": 15.8,
+      "empirical_load_pct": 61.4
+    },
+    "SAR_R-104_OFF_PEAK_CLE": {
+      "count": 25875,
+      "empirical_demand": 102.5,
+      "predicted_demand": 160.7,
+      "empirical_wait_mins": 12.1,
+      "predicted_wait_mins": 13.6,
+      "empirical_load_pct": 60.8
+    },
+    "ARA_R-202_OFF_PEAK_LIG": {
+      "count": 8503,
+      "empirical_demand": 34.0,
+      "predicted_demand": -48.3,
+      "empirical_wait_mins": 11.1,
+      "predicted_wait_mins": 8.3,
+      "empirical_load_pct": 24.4
+    },
+    "SAR_R-104_MIDDAY_FLA": {
+      "count": 4075,
+      "empirical_demand": 424.0,
+      "predicted_demand": 432.0,
+      "empirical_wait_mins": 28.1,
+      "predicted_wait_mins": 27.5,
+      "empirical_load_pct": 130.7
+    },
+    "SAR_R-104_PM_PEAK_FLA": {
+      "count": 6748,
+      "empirical_demand": 708.6,
+      "predicted_demand": 567.2,
+      "empirical_wait_mins": 29.5,
+      "predicted_wait_mins": 31.0,
+      "empirical_load_pct": 134.8
+    },
+    "KAL_R-101_AM_PEAK_FLA": {
+      "count": 5841,
+      "empirical_demand": 534.0,
+      "predicted_demand": 476.3,
+      "empirical_wait_mins": 29.2,
+      "predicted_wait_mins": 29.5,
+      "empirical_load_pct": 133.4
+    },
+    "SIN_R-106_AM_PEAK_EXT": {
+      "count": 5180,
+      "empirical_demand": 179.7,
+      "predicted_demand": 196.2,
+      "empirical_wait_mins": 17.2,
+      "predicted_wait_mins": 17.6,
+      "empirical_load_pct": 99.9
+    },
+    "KAL_R-101_MIDDAY_LIG": {
+      "count": 10687,
+      "empirical_demand": 265.2,
+      "predicted_demand": 277.6,
+      "empirical_wait_mins": 21.4,
+      "predicted_wait_mins": 21.1,
+      "empirical_load_pct": 117.5
+    },
+    "TWN_R-103_MIDDAY_EXT": {
+      "count": 3558,
+      "empirical_demand": 235.0,
+      "predicted_demand": 243.5,
+      "empirical_wait_mins": 19.6,
+      "predicted_wait_mins": 19.5,
+      "empirical_load_pct": 113.4
+    },
+    "SIN_R-106_PM_PEAK_FLA": {
+      "count": 6706,
+      "empirical_demand": 307.6,
+      "predicted_demand": 362.8,
+      "empirical_wait_mins": 27.0,
+      "predicted_wait_mins": 25.4,
+      "empirical_load_pct": 124.5
+    },
+    "GAN_R-102_PM_PEAK_FLA": {
+      "count": 6700,
+      "empirical_demand": 777.9,
+      "predicted_demand": 598.8,
+      "empirical_wait_mins": 29.4,
+      "predicted_wait_mins": 31.3,
+      "empirical_load_pct": 134.9
+    },
+    "GAN_R-102_PM_PEAK_EXT": {
+      "count": 5903,
+      "empirical_demand": 518.4,
+      "predicted_demand": 472.2,
+      "empirical_wait_mins": 23.9,
+      "predicted_wait_mins": 24.2,
+      "empirical_load_pct": 133.5
+    },
+    "SAR_R-104_MIDDAY_EXT": {
+      "count": 3440,
+      "empirical_demand": 285.0,
+      "predicted_demand": 305.4,
+      "empirical_wait_mins": 20.8,
+      "predicted_wait_mins": 20.4,
+      "empirical_load_pct": 120.6
+    },
+    "PEE_R-105_PM_PEAK_FLA": {
+      "count": 6795,
+      "empirical_demand": 586.9,
+      "predicted_demand": 504.0,
+      "empirical_wait_mins": 29.4,
+      "predicted_wait_mins": 30.0,
+      "empirical_load_pct": 134.4
+    },
+    "ARA_R-202_MIDDAY_FLA": {
+      "count": 4016,
+      "empirical_demand": 116.6,
+      "predicted_demand": 172.8,
+      "empirical_wait_mins": 18.2,
+      "predicted_wait_mins": 19.0,
+      "empirical_load_pct": 73.4
+    },
+    "GAN_R-102_AM_PEAK_EXT": {
+      "count": 5271,
+      "empirical_demand": 454.4,
+      "predicted_demand": 432.3,
+      "empirical_wait_mins": 23.7,
+      "predicted_wait_mins": 23.4,
+      "empirical_load_pct": 132.0
+    },
+    "TWN_R-103_OFF_PEAK_LIG": {
+      "count": 8578,
+      "empirical_demand": 102.1,
+      "predicted_demand": 148.9,
+      "empirical_wait_mins": 14.5,
+      "predicted_wait_mins": 15.8,
+      "empirical_load_pct": 61.3
+    },
+    "KAL_R-101_PM_PEAK_FLA": {
+      "count": 6687,
+      "empirical_demand": 610.7,
+      "predicted_demand": 516.3,
+      "empirical_wait_mins": 29.3,
+      "predicted_wait_mins": 30.2,
+      "empirical_load_pct": 134.4
+    },
+    "ARA_R-202_MIDDAY_EXT": {
+      "count": 3460,
+      "empirical_demand": 78.1,
+      "predicted_demand": 46.2,
+      "empirical_wait_mins": 11.0,
+      "predicted_wait_mins": 11.9,
+      "empirical_load_pct": 53.0
+    },
+    "KAL_R-101_OFF_PEAK_FLA": {
+      "count": 3253,
+      "empirical_demand": 147.1,
+      "predicted_demand": 263.5,
+      "empirical_wait_mins": 21.2,
+      "predicted_wait_mins": 21.7,
+      "empirical_load_pct": 77.6
+    },
+    "GAN_R-102_OFF_PEAK_FLA": {
+      "count": 3269,
+      "empirical_demand": 184.6,
+      "predicted_demand": 346.1,
+      "empirical_wait_mins": 22.3,
+      "predicted_wait_mins": 22.8,
+      "empirical_load_pct": 86.7
+    },
+    "SIN_R-106_PM_PEAK_EXT": {
+      "count": 5870,
+      "empirical_demand": 204.6,
+      "predicted_demand": 236.2,
+      "empirical_wait_mins": 18.7,
+      "predicted_wait_mins": 18.3,
+      "empirical_load_pct": 108.4
+    },
+    "KAL_R-101_MIDDAY_FLA": {
+      "count": 4192,
+      "empirical_demand": 364.1,
+      "predicted_demand": 381.1,
+      "empirical_wait_mins": 27.3,
+      "predicted_wait_mins": 26.8,
+      "empirical_load_pct": 127.1
+    },
+    "TWN_R-103_PM_PEAK_FLA": {
+      "count": 6696,
+      "empirical_demand": 593.3,
+      "predicted_demand": 505.2,
+      "empirical_wait_mins": 29.3,
+      "predicted_wait_mins": 30.0,
+      "empirical_load_pct": 134.3
+    },
+    "GAN_R-102_MIDDAY_FLA": {
+      "count": 4011,
+      "empirical_demand": 458.5,
+      "predicted_demand": 463.7,
+      "empirical_wait_mins": 28.5,
+      "predicted_wait_mins": 27.9,
+      "empirical_load_pct": 131.7
+    },
+    "KAL_R-101_OFF_PEAK_EXT": {
+      "count": 2735,
+      "empirical_demand": 94.9,
+      "predicted_demand": 136.9,
+      "empirical_wait_mins": 13.3,
+      "predicted_wait_mins": 14.6,
+      "empirical_load_pct": 58.9
+    },
+    "SIN_R-106_MIDDAY_FLA": {
+      "count": 4136,
+      "empirical_demand": 183.6,
+      "predicted_demand": 227.6,
+      "empirical_wait_mins": 21.9,
+      "predicted_wait_mins": 22.0,
+      "empirical_load_pct": 99.0
+    },
+    "TWN_R-103_PM_PEAK_EXT": {
+      "count": 6180,
+      "empirical_demand": 394.5,
+      "predicted_demand": 378.6,
+      "empirical_wait_mins": 23.2,
+      "predicted_wait_mins": 22.9,
+      "empirical_load_pct": 130.7
+    },
+    "SAR_R-104_AM_PEAK_EXT": {
+      "count": 5048,
+      "empirical_demand": 420.7,
+      "predicted_demand": 400.6,
+      "empirical_wait_mins": 23.4,
+      "predicted_wait_mins": 23.1,
+      "empirical_load_pct": 130.8
+    },
+    "KAL_R-101_MIDDAY_EXT": {
+      "count": 3507,
+      "empirical_demand": 244.0,
+      "predicted_demand": 254.5,
+      "empirical_wait_mins": 19.9,
+      "predicted_wait_mins": 19.7,
+      "empirical_load_pct": 115.0
+    },
+    "UKK_R-204_OFF_PEAK_FLA": {
+      "count": 3219,
+      "empirical_demand": 54.6,
+      "predicted_demand": 71.8,
+      "empirical_wait_mins": 16.8,
+      "predicted_wait_mins": 14.9,
+      "empirical_load_pct": 38.7
+    },
+    "TWN_R-103_AM_PEAK_EXT": {
+      "count": 5212,
+      "empirical_demand": 349.2,
+      "predicted_demand": 338.7,
+      "empirical_wait_mins": 22.6,
+      "predicted_wait_mins": 22.2,
+      "empirical_load_pct": 127.2
+    },
+    "UKK_R-204_MIDDAY_FLA": {
+      "count": 3996,
+      "empirical_demand": 138.3,
+      "predicted_demand": 189.4,
+      "empirical_wait_mins": 19.5,
+      "predicted_wait_mins": 20.0,
+      "empirical_load_pct": 83.3
+    },
+    "UKK_R-204_MIDDAY_EXT": {
+      "count": 3508,
+      "empirical_demand": 90.4,
+      "predicted_demand": 62.8,
+      "empirical_wait_mins": 11.8,
+      "predicted_wait_mins": 12.9,
+      "empirical_load_pct": 60.5
+    },
+    "PEE_R-105_MIDDAY_FLA": {
+      "count": 4074,
+      "empirical_demand": 353.3,
+      "predicted_demand": 368.9,
+      "empirical_wait_mins": 27.3,
+      "predicted_wait_mins": 26.5,
+      "empirical_load_pct": 126.8
+    }
+  }
+}
