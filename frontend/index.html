@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>OmniTransit-Agent Swarm | Urban Digital Twin & Game-Theoretic Command Center</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <!-- STRICT COMPLIANCE GUARDRAIL BANNER -->
+  <div class="guardrail-banner">
+    <div>
+      <span class="guardrail-badge">⚠️ SIMULATION SANDBOX MODE — POLICY PLANNING ONLY</span>
+      <span>All demand, crowding, and waiting-time comparisons are simulated policy projections calibrated on <strong>2,000,000 synthetic telemetry rows</strong> — NOT live passenger-facing arrival ETAs.</span>
+    </div>
+    <div class="sandbox-mode-switch">
+      <span class="pulse-dot"></span>
+      <span>TIME-TRAVEL WHAT-IF MATRIX: <strong>ACTIVE</strong></span>
+    </div>
+  </div>
+
+  <!-- TOP COMMAND HEADER -->
+  <header class="top-header">
+    <div class="brand-group">
+      <div class="brand-logo">OT</div>
+      <div>
+        <div class="brand-title">OmniTransit-Agent Swarm</div>
+        <div class="brand-subtitle">Autonomous 3-Layer Multi-Agent Digital Twin • Game-Theoretic Token Economy • Generative Causal Architect</div>
+      </div>
+    </div>
+
+    <div class="scenario-pill">
+      <span style="color: var(--text-muted);">Active Digital Twin State:</span>
+      <strong id="activeScenarioTitle" style="color: #38bdf8;">Normal Metropolitan Schedule Equilibrium</strong>
+      <span id="activeWeatherBadge" class="badge badge-cyan">CLEAR • 17:00</span>
+    </div>
+  </header>
+
+  <!-- EXECUTIVE KPI TELEMETRY RIBBON -->
+  <section class="kpi-ribbon">
+    <div class="kpi-card">
+      <div class="kpi-label">Simulated Avg Network Wait</div>
+      <div class="kpi-value" id="kpiAvgWait">9.8 mins</div>
+      <div class="kpi-sub" id="kpiWaitSub">Threshold: 15.0m SLA</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-label">Simulated Commuter Queue</div>
+      <div class="kpi-value" id="kpiTotalWaiting">720 pax</div>
+      <div class="kpi-sub" id="kpiCriticalHubs">0 Critical Hubs (&gt;15m)</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-label">Swarm Token Volume Traded</div>
+      <div class="kpi-value" id="kpiTokensTraded">0 TK</div>
+      <div class="kpi-sub" id="kpiGhostRoutes">0 Dynamic Ghost-Routes</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-label">ESG Carbon Offset Minted</div>
+      <div class="kpi-value" id="kpiCarbonSaved">0.0 kg CO₂e</div>
+      <div class="kpi-sub" id="kpiEsgRevenue">$0.00 / ₹0 ESG Value</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-label">Active EV &amp; Hybrid Fleet</div>
+      <div class="kpi-value" id="kpiActiveFleet">40 Buses</div>
+      <div class="kpi-sub" id="kpiEvGuardrail">EV Guardrail (&ge;25% SOC): Armed</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-label">2M-Row Smart Block Engine</div>
+      <div class="kpi-value" id="kpiDatasetRows">2,000,000</div>
+      <div class="kpi-sub">128 Blocks (15,625:1) • R²=0.967</div>
+    </div>
+  </section>
+
+  <!-- MAIN 3-COLUMN ENTERPRISE COMMAND CENTER -->
+  <main class="command-grid">
+    <!-- LEFT SIDEBAR: ADVERSARIAL CHAOS MONKEY & SANDBOX CONTROLS -->
+    <aside class="panel">
+      <div class="panel-header">
+        <span>🎛️ Swarm &amp; Chaos Controls</span>
+        <span class="badge badge-purple">3-LAYER MAS</span>
+      </div>
+      <div class="panel-body">
+        <button class="btn btn-hero" onclick="runFullSimulation(selectedScenario)">
+          ⚡ Trigger Chaos + Auto-Swarm + GenAI
+        </button>
+
+        <div class="section-label">
+          <span>1. Adversarial Chaos Monkey</span>
+          <span style="color: #ef4444;">Stressors</span>
+        </div>
+        <button class="btn btn-chaos active" id="btnScen-HEAVY_RAIN" onclick="selectAndDisrupt('HEAVY_RAIN')">
+          🌧️ Flash Flood (Kalapatti &amp; IT Corridor)
+        </button>
+        <button class="btn btn-chaos" id="btnScen-METRO_BREAKDOWN" onclick="selectAndDisrupt('METRO_BREAKDOWN')">
+          🚇 Peelamedu Metro Feeder Breakdown
+        </button>
+        <button class="btn btn-chaos" id="btnScen-STADIUM_SURGE" onclick="selectAndDisrupt('STADIUM_SURGE')">
+          🏟️ Town Hall 28K Stadium Exit Surge
+        </button>
+        <button class="btn btn-chaos" id="btnScen-EV_GRID_CRISIS" onclick="selectAndDisrupt('EV_GRID_CRISIS')">
+          🔋 Substation EV Grid Peak Throttling
+        </button>
+        <button class="btn btn-chaos" id="btnScen-COMPOUND_CRISIS" onclick="selectAndDisrupt('COMPOUND_CRISIS')">
+          🔥 Category-5 Compound Urban Crisis
+        </button>
+
+        <div class="section-label">
+          <span>2. Autonomous Market Execution</span>
+          <span style="color: #10b981;">Token Auction</span>
+        </div>
+        <button class="btn btn-swarm" onclick="runSwarmOptimization()">
+          🤝 Execute Token Bounty Auction &amp; Explain
+        </button>
+        <button class="btn btn-reset" onclick="resetDigitalTwin()">
+          🔄 Reset Digital Twin to Baseline
+        </button>
+
+        <div class="section-label">
+          <span>3. Time-Travel What-If Sliders</span>
+          <span style="color: #38bdf8;">Custom Matrix</span>
+        </div>
+        <div class="slider-group">
+          <label><span>Rainstorm Intensity</span><strong id="lblRain">65%</strong></label>
+          <input type="range" id="sliderRain" min="0" max="100" value="65" oninput="document.getElementById('lblRain').textContent=this.value+'%'" />
+        </div>
+        <div class="slider-group">
+          <label><span>Population Demand Surge</span><strong id="lblPop">+45%</strong></label>
+          <input type="range" id="sliderPop" min="0" max="100" value="45" oninput="document.getElementById('lblPop').textContent='+'+this.value+'%'" />
+        </div>
+        <div class="slider-group">
+          <label><span>Simulated Hour of Day</span><strong id="lblHour">18:00 (PM Peak)</strong></label>
+          <input type="range" id="sliderHour" min="0" max="23" value="18" oninput="updateHourSliderLabel(this.value)" />
+        </div>
+        <label style="display:flex; align-items:center; gap:8px; font-size:12px; margin-bottom:10px; cursor:pointer;">
+          <input type="checkbox" id="chkMetroFault" checked />
+          <span>Simulate Feeder Line Signal Outage</span>
+        </label>
+        <button class="btn btn-chaos" style="justify-content:center;" onclick="runCustomScenario()">
+          🧪 Inject Custom What-If Shock + Swarm
+        </button>
+
+        <div class="section-label">
+          <span>4. GenAI Causal Engine Config</span>
+          <span style="color: #c084fc;">LLM Bridge</span>
+        </div>
+        <select id="llmProvider" class="input-field">
+          <option value="ollama">Local Ollama (Free, no API key required)</option>
+          <option value="openrouter">OpenRouter free model (API key optional)</option>
+          <option value="gemini">Gemini API</option>
+          <option value="groq">Groq API</option>
+        </select>
+        <input type="password" id="llmApiKey" class="input-field" placeholder="Optional: API key for Gemini / Groq / OpenRouter. Leave blank for Ollama." />
+        <div style="font-size: 10.5px; color: var(--text-dim);">
+          Free-first agentic AI path: local Ollama runs without an API key; paid providers remain as optional fallbacks.
+        </div>
+      </div>
+    </aside>
+
+    <!-- CENTER WORKSPACE: 4 INTERACTIVE COMMAND TABS -->
+    <section class="panel">
+      <div class="tab-bar">
+        <button class="tab-btn active" onclick="switchTab('tab-map', this)">🌐 1. Digital Twin &amp; 3D Swarm Map</button>
+        <button class="tab-btn" onclick="switchTab('tab-compare', this)">📊 2. Schedule &amp; Route Optimizer ("Why")</button>
+        <button class="tab-btn" onclick="switchTab('tab-dataset', this)">🗄️ 3. 2,000,000-Row Blocked ML Explorer</button>
+        <button class="tab-btn" onclick="switchTab('tab-genai', this)">🧠 4. GenAI Causal Architect Report</button>
+        <button class="tab-btn" onclick="switchTab('tab-advanced', this)">🚇 5. Transit Intelligence</button>
+      </div>
+
+      <!-- TAB 1: GEOSPATIAL DIGITAL TWIN & SWARM CANVAS -->
+      <div id="tab-map" class="tab-pane active">
+        <div class="canvas-wrapper">
+          <canvas id="twinCanvas"></canvas>
+          <div class="map-top-badge" id="canvasStatusOverlay">
+            SWARM TELEMETRY: 8 HUBS • 8 CORRIDORS • 6 PERSONA COHORTS
+          </div>
+          <div class="map-overlay-legend">
+            <div class="legend-item"><span class="legend-dot" style="background:#10b981;"></span> Smooth (&le;11.5m wait)</div>
+            <div class="legend-item"><span class="legend-dot" style="background:#f59e0b;"></span> Elevated (12–15m wait)</div>
+            <div class="legend-item"><span class="legend-dot" style="background:#ef4444;"></span> Critical Bottleneck (&gt;15m)</div>
+            <div class="legend-item"><span class="legend-dot" style="background:#38bdf8;"></span> Token Bounty Arc</div>
+            <div class="legend-item"><span class="legend-dot" style="background:#a855f7;"></span> Dynamic Ghost-Route</div>
+          </div>
+        </div>
+
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+          <strong style="font-size:13px; color:#38bdf8;">🏛️ Live Station Hub Telemetry &amp; Commuter Persona Queues (Simulated)</strong>
+          <span style="font-size:11px; color:var(--text-muted);">Click any chaos button on the left to observe real-time token bidding</span>
+        </div>
+        <div id="stationsGrid" class="stations-grid"></div>
+
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-top:6px;">
+          <strong style="font-size:13px; color:#10b981;">🔋 EV Fleet Battery-Life &amp; Grid Constraint Guardrails (25% Minimum SOC Floor)</strong>
+          <span class="badge badge-amber">Prevents Low-Battery Dispatch</span>
+        </div>
+        <div id="evFleetGrid" class="ev-grid"></div>
+      </div>
+
+      <!-- TAB 2: SCHEDULE & ROUTE COMPARISON MATRIX + B2C COMMUTER COMPANION -->
+      <div id="tab-compare" class="tab-pane">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+          <div>
+            <h3 style="font-size:15px; color:#38bdf8;">📋 Disrupted Baseline vs. Swarm-Optimized Route &amp; Timing Comparison</h3>
+            <p style="font-size:12px; color:var(--text-muted);">Explains <strong>WHY</strong> each route frequency or vehicle transfer is recommended without presenting simulated metrics as live arrival ETAs.</p>
+          </div>
+          <span class="badge badge-green">POLICY SANDBOX COMPARISON</span>
+        </div>
+
+        <div class="table-wrap" style="margin-bottom:16px;">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Transit Hub &amp; Persona</th>
+                <th>Primary vs. Alternative Route</th>
+                <th>Disrupted Wait (Pax)</th>
+                <th>Optimized Wait (Pax)</th>
+                <th>Headway Shift</th>
+                <th>Tokens &amp; Load</th>
+                <th>Why Route / Timing is Recommended (Causal Logic)</th>
+              </tr>
+            </thead>
+            <tbody id="comparisonTableBody"></tbody>
+          </table>
+        </div>
+
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+          <div>
+            <h3 style="font-size:14px; color:#c084fc;">📲 B2C "GenAI Commuter Companion" API Feed (Passenger Advisory Preview)</h3>
+            <p style="font-size:11.5px; color:var(--text-muted);">Commercial API output for consumer transit apps — advises passengers honestly with explicit Sandbox Policy disclaimers.</p>
+          </div>
+          <span class="badge badge-purple">B2C API MODULE</span>
+        </div>
+        <div id="companionGrid" class="stations-grid" style="grid-template-columns: repeat(2, 1fr);"></div>
+      </div>
+
+      <!-- TAB 3: 2,000,000-ROW DATASET & SMART BLOCKING EXPLORER -->
+      <div id="tab-dataset" class="tab-pane">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+          <div>
+            <h3 style="font-size:15px; color:#38bdf8;">🗄️ 2,000,000-Row Original Synthetic Dataset &amp; Smart Blocking Engine</h3>
+            <p style="font-size:12px; color:var(--text-muted);">Generated locally on 8 CPU cores in <strong>1.88s</strong> (`data/omnitransit_2m_telemetry.csv`, 234.92 MB) using Spatial-Temporal Cohort Blocking.</p>
+          </div>
+          <span class="badge badge-cyan">15,625:1 BLOCK REDUCTION</span>
+        </div>
+
+        <!-- 24-Hour Busy Period Chart -->
+        <div style="margin-bottom:14px;">
+          <div style="display:flex; justify-content:space-between; font-size:12px; margin-bottom:6px;">
+            <strong>⏰ 24-Hour Busy Time-Period Identification (Aggregated across 2,000,000 Check-Ins)</strong>
+            <span><span style="color:#ef4444;">■</span> Busy Peak Windows (07:00–10:00 AM Peak &amp; 17:00–20:00 PM Peak) &nbsp;|&nbsp; <span style="color:#06b6d4;">■</span> Off-Peak / Midday</span>
+          </div>
+          <div id="hourlyChart" class="hourly-chart"></div>
+        </div>
+
+        <!-- Interactive Blocked GBM Predictor -->
+        <div style="background:var(--bg-card); border:1px solid var(--border-bright); border-radius:10px; padding:12px; margin-bottom:14px;">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+            <strong style="color:#10b981;">🤖 Interactive 2M-Row Blocked GBM Demand &amp; Wait-Time Predictor</strong>
+            <span class="badge badge-green">Trained in 5.78 ms • Wait R² = 0.9668</span>
+          </div>
+          <div style="display:grid; grid-template-columns: repeat(5, 1fr); gap:8px; align-items:end;">
+            <div>
+              <label style="font-size:11px; color:var(--text-muted);">Transit Hub</label>
+              <select id="predHub" class="input-field" style="margin-bottom:0;" onchange="runBlockPrediction()">
+                <option value="KAL">KAL - Kalapatti Tech Hub</option>
+                <option value="GAN">GAN - Gandhipuram Central</option>
+                <option value="TWN">TWN - Town Hall Hub</option>
+                <option value="SAR">SAR - Saravanampatti IT</option>
+                <option value="PEE">PEE - Peelamedu Metro Link</option>
+                <option value="SIN">SIN - Singanallur Center</option>
+                <option value="ARA">ARA - Arasur Industrial</option>
+                <option value="UKK">UKK - Ukkadam Terminal</option>
+              </select>
+            </div>
+            <div>
+              <label style="font-size:11px; color:var(--text-muted);">Time Period Bucket</label>
+              <select id="predBucket" class="input-field" style="margin-bottom:0;" onchange="runBlockPrediction()">
+                <option value="PM_PEAK">PM_PEAK (17:00 - 20:00)</option>
+                <option value="AM_PEAK">AM_PEAK (07:00 - 10:00)</option>
+                <option value="MIDDAY">MIDDAY (11:00 - 16:00)</option>
+                <option value="OFF_PEAK">OFF_PEAK (21:00 - 06:00)</option>
+              </select>
+            </div>
+            <div>
+              <label style="font-size:11px; color:var(--text-muted);">Weather Condition</label>
+              <select id="predWeather" class="input-field" style="margin-bottom:0;" onchange="runBlockPrediction()">
+                <option value="FLA">FLASH_FLOOD</option>
+                <option value="LIG">LIGHT_RAIN</option>
+                <option value="CLE">CLEAR</option>
+                <option value="EXT">EXTREME_HEAT</option>
+              </select>
+            </div>
+            <div>
+              <label style="font-size:11px; color:var(--text-muted);">Scheduled Headway (mins)</label>
+              <select id="predHeadway" class="input-field" style="margin-bottom:0;" onchange="runBlockPrediction()">
+                <option value="15">15 mins</option>
+                <option value="12" selected>12 mins</option>
+                <option value="10">10 mins</option>
+                <option value="8">8 mins</option>
+                <option value="20">20 mins</option>
+              </select>
+            </div>
+            <button class="btn btn-swarm" style="margin-bottom:0;" onclick="runBlockPrediction()">Predict Block</button>
+          </div>
+          <div id="predResultBox" style="margin-top:10px; padding:10px; background:rgba(6, 182, 212, 0.08); border-radius:6px; font-size:12.5px;"></div>
+        </div>
+
+        <!-- Commuter Persona & Top Distressed Smart Blocks -->
+        <div style="display:grid; grid-template-columns: 1fr 1.3fr; gap:12px;">
+          <div>
+            <strong style="font-size:12.5px; color:#c084fc; display:block; margin-bottom:6px;">👥 Layer-1 Commuter Persona Cohorts (2M Rows)</strong>
+            <div class="table-wrap">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>Persona Cohort</th>
+                    <th>Patience</th>
+                    <th>Share</th>
+                    <th>Abandon Risk</th>
+                  </tr>
+                </thead>
+                <tbody id="personaTableBody"></tbody>
+              </table>
+            </div>
+          </div>
+          <div>
+            <strong style="font-size:12.5px; color:#f59e0b; display:block; margin-bottom:6px;">🧱 Top Distressed Smart Blocks (128 Blocked Clusters)</strong>
+            <div class="table-wrap">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>Smart Block Key</th>
+                    <th>Rows</th>
+                    <th>Avg Demand</th>
+                    <th>Simulated Wait</th>
+                    <th>Avg Bounty</th>
+                  </tr>
+                </thead>
+                <tbody id="blocksTableBody"></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TAB 4: GENAI CAUSAL ARCHITECT BRIEFING & PROMPT STUDIO -->
+      <div id="tab-genai" class="tab-pane">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+          <div>
+            <h3 style="font-size:15px; color:#38bdf8;">🧠 Chief AI Urban Transit Architect — Executive Causal Briefing</h3>
+            <p style="font-size:12px; color:var(--text-muted);">Translates multi-agent token auction telemetry into natural-language causal explanations for human dispatchers.</p>
+          </div>
+          <button class="btn btn-swarm" style="width:auto; padding:6px 12px;" onclick="copyGenAiPrompt()">📋 Copy Raw LLM Prompt</button>
+        </div>
+
+        <div id="causalReportContainer" class="causal-report-box"></div>
+
+        <div style="margin-top:14px;">
+          <strong style="font-size:12.5px; color:var(--text-muted); display:block; margin-bottom:6px;">🔍 Live Compiled GenAI Prompt Payload (`get_transit_architect_prompt`)</strong>
+          <pre id="rawPromptBox" style="background:#04070f; border:1px solid var(--border-subtle); border-radius:8px; padding:12px; font-family:var(--font-mono); font-size:11px; color:#94a3b8; max-height:240px; overflow-y:auto; white-space:pre-wrap;"></pre>
+        </div>
+      </div>
+
+      <!-- TAB 5: ADVANCED TRANSPORT INTELLIGENCE -->
+      <div id="tab-advanced" class="tab-pane">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+          <div>
+            <h3 style="font-size:15px; color:#38bdf8;">🚇 Advanced Transport Intelligence</h3>
+            <p style="font-size:12px; color:var(--text-muted);">Integrated digital-twin simulation, bunching detection, fleet allocation, Pareto trade-offs, and robustness analysis.</p>
+          </div>
+          <button class="btn btn-swarm" style="width:auto; padding:6px 12px;" onclick="fetchTransportSummary()">Refresh Analysis</button>
+        </div>
+
+        <div id="transportSummaryCards" class="stations-grid" style="grid-template-columns: repeat(2, 1fr); margin-bottom:12px;"></div>
+
+        <div style="display:grid; grid-template-columns: 1fr 1fr; gap:12px;">
+          <div class="table-wrap">
+            <table class="data-table">
+              <thead>
+                <tr><th>Bunching Check</th><th>Result</th></tr>
+              </thead>
+              <tbody id="bunchingTableBody"></tbody>
+            </table>
+          </div>
+          <div class="table-wrap">
+            <table class="data-table">
+              <thead>
+                <tr><th>Fleet Allocation</th><th>Value</th></tr>
+              </thead>
+              <tbody id="fleetTableBody"></tbody>
+            </table>
+          </div>
+        </div>
+
+        <div style="margin-top:12px;" class="table-wrap">
+          <table class="data-table">
+            <thead>
+              <tr><th>Pareto Candidate</th><th>Passenger Wait</th><th>Bus Hours</th><th>Denied Boardings</th><th>Feasible</th></tr>
+            </thead>
+            <tbody id="paretoTableBody"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- RIGHT PANEL: DIPLOMATIC NEGOTIATION TERMINAL & ESG EXCHANGE -->
+    <aside class="panel">
+      <div class="panel-header">
+        <span>📡 Swarm Negotiation Terminal</span>
+        <span class="badge badge-green" id="logCountBadge">LIVE STREAM</span>
+      </div>
+      <div class="panel-body">
+        <div id="terminalBox" class="terminal-box"></div>
+
+        <div class="section-label" style="margin-top:12px;">
+          <span>💰 ESG Carbon-Credit Exchange</span>
+          <span class="badge badge-purple">B2B / B2G SaaS</span>
+        </div>
+        <div style="background:var(--bg-card); border:1px solid var(--border-subtle); border-radius:8px; padding:10px; font-size:12px;">
+          <div style="display:flex; justify-content:space-between; margin-bottom:5px;">
+            <span style="color:var(--text-muted);">Commuters Retained in Transit:</span>
+            <strong id="esgRetained">0 pax</strong>
+          </div>
+          <div style="display:flex; justify-content:space-between; margin-bottom:5px;">
+            <span style="color:var(--text-muted);">Private Cab Trips Prevented:</span>
+            <strong id="esgCabs">0 trips</strong>
+          </div>
+          <div style="display:flex; justify-content:space-between; margin-bottom:5px;">
+            <span style="color:var(--text-muted);">Verified CO₂e Prevented:</span>
+            <strong id="esgCo2" style="color:#10b981;">0.0 kg</strong>
+          </div>
+          <div style="display:flex; justify-content:space-between; margin-bottom:5px;">
+            <span style="color:var(--text-muted);">Carbon Credits Minted:</span>
+            <strong id="esgCredits" style="color:#38bdf8;">0.00 Credits</strong>
+          </div>
+          <div style="display:flex; justify-content:space-between; border-top:1px solid var(--border-subtle); padding-top:5px; margin-top:4px;">
+            <span style="color:var(--text-muted);">Tradable ESG Market Value:</span>
+            <strong id="esgValuation" style="color:#f59e0b;">$0.00 (₹0)</strong>
+          </div>
+        </div>
+      </div>
+    </aside>
+  </main>
+
+  <script src="standalone_data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
